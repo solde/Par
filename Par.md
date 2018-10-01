@@ -1,7 +1,30 @@
-# Temps d'execució
+<style>
+    h1{
+        color: red;
+        text-align: center;
+        font-size: 50px;
+        text-shadow: 2px 2px blue;
+    }
+    h2{
+        font-weight: bold;
+    }
+    img {
+        height: auto;
+        width: 50%;
+    }
+    note {
+        font-weight: lighter;
+    }
+    p{
+        text-align: justify;
+    }
+</style>
+
+
+## Temps d'execució
     T1 = Σ(Work_node(i))
     Tc = Tasks_crit
-    Paralellisme = T1/Tc -> Numero màxim de processadors que es farà servir
+    Paralellisme = T1/Tc -> Numero màxim de processadors que es farà servir.
 ---
 Problema 3:
 
@@ -12,3 +35,4 @@ Problema 3:
     P = T1/Tc = 4,54
 
     <img src=pissarra1.png </img>
+
