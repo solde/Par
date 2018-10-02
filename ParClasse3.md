@@ -3,7 +3,7 @@
         color: red;
         text-align: center;
         font-size: 50px;
-        text-shadow: 2px 2px blue;
+        text-shadow: 2px 2px #ffcccc;
     }
     h2{
         font-weight: bold;
@@ -36,7 +36,8 @@ Efficiency (Eff<sub>p</sub>): it is a measure of the fraction of time for which 
 
 ## Amdahl's law
 
-> φ (Par_Fraction) = T<sub>seq_time_of_par_part</sub> / T<sub>seq_exec</sub>
+### Par_Fraction
+> φ= T<sub>seq_time_of_par_part</sub> / T<sub>seq_exec</sub>
 
 <center><img src="./amdahl.png"></center>
 
