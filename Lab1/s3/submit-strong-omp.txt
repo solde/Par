@@ -1,0 +1,114 @@
+Intel(R) Parallel Studio XE 2018 Update 2 for Linux*
+Copyright (C) 2009-2018 Intel Corporation. All rights reserved.
+make: '3dfft_seq' is up to date.
+make: '3dfft_omp' is up to date.
+Executing 3dfft_seq sequentially
+Run 0...Elapsed time = 2.14
+Run 1...Elapsed time = 2.20
+Run 2...Elapsed time = 2.17
+ELAPSED TIME MIN OF 3 EXECUTIONS =2.14
+
+3dfft_omp 1 12 3
+Starting OpenMP executions...
+Executing 3dfft_omp with 1 threads
+Run 0...Elapsed time = 2.33
+Run 1...Elapsed time = 2.28
+Run 2...Elapsed time = 2.31
+ELAPSED TIME MIN OF 3 EXECUTIONS =2.28
+
+Executing 3dfft_omp with 2 threads
+Run 0...Elapsed time = 1.87
+Run 1...Elapsed time = 1.86
+Run 2...Elapsed time = 1.87
+ELAPSED TIME MIN OF 3 EXECUTIONS =1.86
+
+Executing 3dfft_omp with 3 threads
+Run 0...Elapsed time = 1.38
+Run 1...Elapsed time = 1.38
+Run 2...Elapsed time = 1.38
+ELAPSED TIME MIN OF 3 EXECUTIONS =1.38
+
+Executing 3dfft_omp with 4 threads
+Run 0...Elapsed time = 1.25
+Run 1...Elapsed time = 1.26
+Run 2...Elapsed time = 1.26
+ELAPSED TIME MIN OF 3 EXECUTIONS =1.25
+
+Executing 3dfft_omp with 5 threads
+Run 0...Elapsed time = 1.22
+Run 1...Elapsed time = 1.24
+Run 2...Elapsed time = 1.23
+ELAPSED TIME MIN OF 3 EXECUTIONS =1.22
+
+Executing 3dfft_omp with 6 threads
+Run 0...Elapsed time = 1.20
+Run 1...Elapsed time = 1.19
+Run 2...Elapsed time = 1.20
+ELAPSED TIME MIN OF 3 EXECUTIONS =1.19
+
+Executing 3dfft_omp with 7 threads
+Run 0...Elapsed time = 1.22
+Run 1...Elapsed time = 1.23
+Run 2...Elapsed time = 1.33
+ELAPSED TIME MIN OF 3 EXECUTIONS =1.22
+
+Executing 3dfft_omp with 8 threads
+Run 0...Elapsed time = 1.21
+Run 1...Elapsed time = 1.19
+Run 2...Elapsed time = 1.23
+ELAPSED TIME MIN OF 3 EXECUTIONS =1.19
+
+Executing 3dfft_omp with 9 threads
+Run 0...Elapsed time = 1.26
+Run 1...Elapsed time = 1.20
+Run 2...Elapsed time = 1.26
+ELAPSED TIME MIN OF 3 EXECUTIONS =1.20
+
+Executing 3dfft_omp with 10 threads
+Run 0...Elapsed time = 1.27
+Run 1...Elapsed time = 1.16
+Run 2...Elapsed time = 1.27
+ELAPSED TIME MIN OF 3 EXECUTIONS =1.16
+
+Executing 3dfft_omp with 11 threads
+Run 0...Elapsed time = 1.21
+Run 1...Elapsed time = 1.27
+Run 2...Elapsed time = 1.24
+ELAPSED TIME MIN OF 3 EXECUTIONS =1.21
+
+Executing 3dfft_omp with 12 threads
+Run 0...Elapsed time = 1.26
+Run 1...Elapsed time = 1.19
+Run 2...Elapsed time = 1.26
+ELAPSED TIME MIN OF 3 EXECUTIONS =1.19
+
+Resultat de l'experiment (tambe es troben a  ./elapsed-boada-3.txt  i  ./speedup-boada-3.txt  )
+#threads	Elapsed min
+1   2.28
+2   1.86
+3   1.38
+4   1.25
+5   1.22
+6   1.19
+7   1.22
+8   1.19
+9   1.20
+10   1.16
+11   1.21
+12   1.19
+
+#threads	Speedup
+1   .93859649122807017543
+2   1.15053763440860215053
+3   1.55072463768115942028
+4   1.71200000000000000000
+5   1.75409836065573770491
+6   1.79831932773109243697
+7   1.75409836065573770491
+8   1.79831932773109243697
+9   1.78333333333333333333
+10   1.84482758620689655172
+11   1.76859504132231404958
+12   1.79831932773109243697
+
+

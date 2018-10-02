@@ -1,0 +1,3 @@
+What is limiting the scalability of this version v4?
+Limit: 32
+Data depencendes.

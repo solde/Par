@@ -1,0 +1,5 @@
+Intel(R) Parallel Studio XE 2018 Update 2 for Linux*
+Copyright (C) 2009-2018 Intel Corporation. All rights reserved.
+make: 'pi_seq' is up to date.
+Number pi after 1000000000 iterations = 3.141592653589768
+Execution time (secs.): 3.937650
