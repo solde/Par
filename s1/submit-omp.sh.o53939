@@ -1,8 +1,0 @@
-Intel(R) Parallel Studio XE 2018 Update 2 for Linux*
-Copyright (C) 2009-2018 Intel Corporation. All rights reserved.
-
- USAGE: submit-omp.sh PROG size n_th
- PROG -> omp program name
- size -> size of the problem
- n_th -> number of threads
-
