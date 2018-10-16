@@ -37,6 +37,8 @@
 
 In lab 2 we are going to work with Mandelbrot Set. It is a set of complex numbers. With an algorithm to compute Mandelbrot Set we are going to obvserve how to paralelize in diferent ways. Point method and Row method are the methods we are going to work with.
 
+<div class="page">
+
 ## Task descomposition and granularity analysis
 
 <img src=./amb_col.png> <img src=./sense_col.png>
@@ -158,6 +160,8 @@ The granularity in **point method** is smaller and with 64 threads the execution
 
 X11 use a variable, named X11_COLO_fake, with dependences. With openMP you can declare critical regions. That protects your code while parallelize from decoherences.
 
+<div class="page">
+
 ## Point decomposition in OpenMP
 
 The following plots are the time plot and speed up plot which shows the dependence between time or speed up and the number of cores used while the execxution of the program.
@@ -166,3 +170,8 @@ The following plots are the time plot and speed up plot which shows the dependen
 <img src="2_SU.png">
 
 Speed up doesn’t increase any more, then time also doesn’t increase. We can conclude the maximum number of cores that the program can deal with is 5 in that kind of palatalization. 
+
+0.318599s
+0.316366s
+
+OMP_NUM_THREADS=1 ./mandeld-omp -i 10000

@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ParTeo.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+	font-size: 14px;
+	padding: 0 12px;
+	line-height: 22px;
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family:  "Meiryo", "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+</head>
+<body>
+<style>
+    h1{
+        color: red;
+        text-align: center;
+        font-size: 40px;
+        text-shadow: 2px 2px #ffcccc;      
+    }
+    h2{
+        font-weight: bold;
+    }
+    img {
+        height: auto;
+        width: 100%;
+        
+    }
+    .center{
+        width: 50%;
+        height: auto;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+    note {
+        font-weight: lighter;
+    }
+    p{
+        text-align: justify;
+    }
+    .emoji{
+        height: 2em;
+    }
+
+</style>
+<h1 id="understanding-parallelism">Understanding parallelism</h1>
+<h2 id="speedup-vs-efficiency">SpeedUp vs Efficiency</h2>
+<p>SpeedUp (S<sub>p</sub>): relative reduction of execution time whn using P processors with respect sequential.</p>
+<p>Efficiency (Eff<sub>p</sub>): it is a measure of the fraction of time for which processing element is usefull.</p>
+<h2 id="escalability">Escalability</h2>
+<blockquote>
+<ul>
+<li>Strong: resources x2 -&gt; scalability x2</li>
+<li>Weaak: resources x2 w. proportional work</li>
+</ul>
+</blockquote>
+<h2 id="amdahls-law">Amdahl's law</h2>
+<h3 id="parfraction">Par_Fraction</h3>
+<blockquote>
+<p>φ= T<sub>seq_time_of_par_part</sub> / T<sub>seq_exec</sub></p>
+</blockquote>
+<img src="./amdahl.png">
+<p>Note: <note>If P approach to infinit, φ/P approach to 0, then S<sub>p</sub> = 1/(1-φ).</note></p>
+<p>Ex:</p>
+<blockquote>
+<pre><code>   seq - 25s
+   par - 50s
+   seq - 25s
+         100s
+</code></pre>
+<p>φ = 100/50 = 0,5
+SpeedUp <sub>par</sub> = 50/10 = 5</p>
+<p>SpeedUp = 100/60 = 1.67</p>
+</blockquote>
+<h2 id="sources-of-overhead">Sources of overhead</h2>
+<blockquote>
+<ul>
+<li>tark creation</li>
+<li>barrier sync</li>
+<li>tark sync</li>
+<li>exclusive access to data</li>
+<li>data sharing</li>
+<li>Idleness</li>
+<li>Computation (extra work to obtain a palallel algorithm)</li>
+<li>Memory (extra memory to obtain a palallel algorithm)</li>
+<li>Contention (competition for the access to shared resources)</li>
+</ul>
+</blockquote>
+<center><img src="T1.png"></center>
+<h2 id="how-to-model-data-sharing-overload">How to model data sharing overload?</h2>
+<p>Example:</p>
+<h3 id="jacobi-solver">Jacobi solver</h3>
+<blockquote>
+<p>T<sub>calc</sub> = (N<sup>2</sup>/P)*t<sub>boddy</sub></p>
+<p>T<sub>p</sub> = T<sub>calc</sub> + T<sub>comm</sub></p>
+<p>Tcomm = 2(t<sub>s</sub>+t<sub>w</sub>*N)</p>
+</blockquote>
+<h2 id="data-sharing-modeling">Data sharing modeling</h2>
+<h3 id="example-4">Example 4</h3>
+<pre class="hljs"><code><div>void compute(int n, double *u, double *utmp) {
+    int i, j;
+    double tmp;
+    for (i = 1; i &lt; n-1; i++) {
+        for (j = 1; j &lt; n-1; j++) {
+            tmp = u[n*(i+1) + j] + u[n*(i-1) + j] + // elements u[i+1][j] and u[i-1][j]
+            u[n*i + (j+1)] + u[n*i + (j-1)] - // elements u[i][j+1] and u[i][j-1]
+            4 * u[n*i + j]; // element u[i][j]
+            u[n*i + j] = tmp/4; // element u[i][j]
+        }
+    }
+}
+</div></code></pre>
+<p>Each cpu with n<sup>2</sup>/P elements. Tasks compute segments of n/c rows by c columns.</p>
+<p>Then, time acquire the following form:</p>
+<img src="Timeex4.png">
+<img src="SpeedUpex4.png" class="center">
+<div class=page>
+<h1 id="task-decomposition">Task decomposition</h1>
+<img src="Diagram1.png">
+<p>Types:</p>
+<ul>
+<li>Lineal Task decomposition</li>
+</ul>
+<blockquote>
+<p>Code block or procedure</p>
+</blockquote>
+<ul>
+<li>Iterative task decomposition</li>
+</ul>
+<blockquote>
+<p>Iterative constructs</p>
+</blockquote>
+<ul>
+<li>Recursive task decomposition</li>
+</ul>
+<blockquote>
+<p>Recursive procedures</p>
+</blockquote>
+<h2 id="decomposition-strategies">Decomposition Strategies</h2>
+<h3 id="leaf-strategy">Leaf strategy</h3>
+<p>Create one task squetentally for each leaf of task tree.</p>
+<blockquote>
+<p>Less tasks</p>
+<p>Less overhead</p>
+</blockquote>
+<h3 id="tree-strategy">Tree strategy</h3>
+<p>Creater one task for each invocation.</p>
+<blockquote>
+<p>More Tasks</p>
+<p>More Overhead</p>
+</blockquote>
+<h2 id="cut-off-control">Cut-off control</h2>
+<p>If tree strategy is in use, whan a certain number of task are created or the granulation si too small or in a certain number of recursive calls; you can change the strategy to Leaf in order to reduce overhead.</p>
+<video width="100%" height="auto" controls>
+    <source src="lesson4.mp4" type="video/mp4">
+</video>
+</body>
+</html>
