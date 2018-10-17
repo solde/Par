@@ -167,17 +167,20 @@ X11 use a variable, named X11_COLO_fake, with dependences. With openMP you can d
 The following plots are the time plot and speed up plot which shows the dependence between time or speed up and the number of cores used while the execxution of the program.
 
 <img src="2_time.png">
+
+add comments
+
 <img src="2_SU.png">
 
-<img src="speed_up5.png">
-<img src="speed_up50.png">
-<img src="speed_up400.png">
-<img src="speed_up800.png">
+<img src="graficas/speed_up5.png">
+<img src="graficas/speed_up50.png">
+<img src="graficas/speed_up400.png">
+<img src="graficas/speed_up800.png">
 
-<img src="e_time5.png">
-<img src="e_time50.png">
-<img src="e_time400.png">
-<img src="e_time800.png">
+<img src="graficas/e_time5.png">
+<img src="graficas/e_time50.png">
+<img src="graficas/e_time400.png">
+<img src="graficas/e_time800.png">
 
 It appears that after 8 threads the speed-up and the execution time plots begin to normalize. Thats cause the mandelbot only saves a great portion of execution time until 8 cores, after that, we only get small bonuses. 
 
