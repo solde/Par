@@ -171,7 +171,8 @@ The following plots are the time plot and speed up plot which shows the dependen
 
 Speed up doesn’t increase any more, then time also doesn’t increase. We can conclude the maximum number of cores that the program can deal with is 5 in that kind of palatalization. 
 
-0.318599s
-0.316366s
+<div class="page">
 
-OMP_NUM_THREADS=1 ./mandeld-omp -i 10000
+## Row decomposition in OpenMP
+
+
