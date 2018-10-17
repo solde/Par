@@ -169,6 +169,18 @@ The following plots are the time plot and speed up plot which shows the dependen
 <img src="2_time.png">
 <img src="2_SU.png">
 
+<img src="speed_up5.png">
+<img src="speed_up50.png">
+<img src="speed_up400.png">
+<img src="speed_up800.png">
+
+<img src="e_time5.png">
+<img src="e_time50.png">
+<img src="e_time400.png">
+<img src="e_time800.png">
+
+It appears that after 8 threads the speed-up and the execution time plots begin to normalize. Thats cause the mandelbot only saves a great portion of execution time until 8 cores, after that, we only get small bonuses. 
+
 Speed up doesn’t increase any more, then time also doesn’t increase. We can conclude the maximum number of cores that the program can deal with is 5 in that kind of palatalization. 
 
 <div class="page">
