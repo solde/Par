@@ -32,6 +32,7 @@
 </style>
 
 Plots: Add comments
+
        Add plot tags
 
 # Lab 2
