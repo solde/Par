@@ -8,6 +8,9 @@
     h2{
         font-weight: bold;
     }
+    h3{
+        font-weight: bold;
+    }
     img {
         height: auto;
         width: 100%;
@@ -67,14 +70,14 @@ Ex:
 > SpeedUp = 100/60 = 1.67
 
 ## Sources of overhead
-> - tark creation
+> - task creation
 > - barrier sync
-> - tark sync
+> - task sync
 > - exclusive access to data
 > - data sharing 
 > - Idleness
-> - Computation (extra work to obtain a palallel algorithm)
-> - Memory (extra memory to obtain a palallel algorithm)
+> - Computation (extra work to obtain a palalel algorithm)
+> - Memory (extra memory to obtain a palalel algorithm)
 > - Contention (competition for the access to shared resources)
 
 <center><img src="T1.png"></center>
@@ -120,17 +123,17 @@ Then, time acquire the following form:
 
 Types:
 * Lineal Task decomposition
-> Code block or procedure
+>   Code block or procedure
 * Iterative task decomposition
-> Iterative constructs
+>   Iterative constructs
 * Recursive task decomposition
-> Recursive procedures
+>   Recursive procedures
 
 ## Decomposition Strategies
 
 ### Leaf strategy
 
-Create one task squetentally for each leaf of task tree. 
+Create one task sequentially for each leaf of task tree. 
 
 >Less tasks
 >
@@ -138,7 +141,7 @@ Create one task squetentally for each leaf of task tree.
 
 ### Tree strategy
 
-Creater one task for each invocation.
+Creator one task for each invocation.
 
 > More Tasks
 > 
@@ -146,4 +149,44 @@ Creater one task for each invocation.
 
 ## Cut-off control
 
-If tree strategy is in use, whan a certain number of task are created or the granulation si too small or in a certain number of recursive calls; you can change the strategy to Leaf in order to reduce overhead.
+If tree strategy is in use, when a certain number of task are created or the granulation si too small or in a certain number of recursive calls; you can change the strategy to Leaf in order to reduce overhead.
+
+## Task ordering constraints
+
+### Dependences
+
+#### Constrains in the paralel execution of tasks
+
+* Task ordering costraints
+>    They force the execution of tasks in a requiered order
+* Data sharing constraints
+>    They force the access to data to fulfil certain properties.
+
+### Task ordering constraints
+
+* Control flow constraints
+>   The creation of a task depends on the outcome (decision) of one or more previous tasks.
+* Data flow constraints
+>   The execution of a task can not startuntil one or more previous tasks have computed some data.
+
+### Task synchronization in Open MP
+
+* Thread barriers
+>   Wait for all threads to finish previous work.
+* Task barriers
+    *  taskwait
+>               Suspends the current task waiting on the completion of child tasks of the current task. (stand-alone directive).
+    *  taskgorup
+>               Suspends the current task at the end of structured block waiting on completion of child tasks of the current task and their descendent tasks
+
+* Task dependences
+
+### Task dependences
+
+* IN
+* Out
+* InOut
+ 
+You can creat a dependence of a part of a task. For example a coss-iteration dependence.
+
+*
