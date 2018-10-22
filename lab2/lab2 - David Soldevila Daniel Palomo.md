@@ -31,10 +31,6 @@
     }
 </style>
 
-Plots: Add comments
-
-       Add plot tags
-
 # Lab 2
 
 ## Introduction
@@ -97,9 +93,31 @@ With point decomposition, one task is created for every leaf of the three task s
 The following plots are the time plot and speed up plot which shows the dependence between time or speed up and the number of cores used while the execxution of the program.
 
 <img src="2_time.png" class="center"><img src="2_SU.png" class="center">
-<note> Elapsed tiem and Speed Up plot for point decomposition version of mandel-omp.c program </note>
+<note> Elapsed tiem and Speed Up plot for point decomposition version of mandel-omp.c program.</note>
 
-It appears that after 8 threads the speed-up and the execution time plots begin to normalize. Thats cause the mandelbot only saves a great portion of execution time until 8 cores, after that, we only get small bonuses. 
+The following plots are representing the relation between different number of tasks created.
+
+<img src="graficas/speed_up800.png" class="center"><img src="graficas/e_time800.png" class="center">
+<note> Elapsed tiem and Speed Up plot for point decomposition version of mandel-omp.c program with 800 tasks.</note>
+
+<img src="graficas/speed_up400.png" class="center"><img src="graficas/e_time400.png" class="center">
+<note> Elapsed tiem and Speed Up plot for point decomposition version of mandel-omp.c program with 400 tasks.</note>
+
+<img src="graficas/speed_up50.png" class="center"><img src="graficas/e_time50.png" class="center">
+<note> Elapsed tiem and Speed Up plot for point decomposition version of mandel-omp.c program with 50 tasks.</note>
+
+<img src="graficas/speed_up5.png" class="center"><img src="graficas/e_time5.png" class="center">
+<note> Elapsed tiem and Speed Up plot for point decomposition version of mandel-omp.c program with 5 tasks.</note>
+
+<img src="graficas/speed_up2.png" class="center"><img src="graficas/e_time2.png" class="center">
+<note> Elapsed tiem and Speed Up plot for point decomposition version of mandel-omp.c program with 2 tasks.</note>
+
+<img src="graficas/speed_up1.png" class="center"><img src="graficas/e_time1.png" class="center">
+<note> Elapsed tiem and Speed Up plot for point decomposition version of mandel-omp.c program with 1 tasks.</note>
+
+
+
+It appears that after 8 threads the speed-up and the execution time plots begin to normalize. Thats cause the mandelbrot only saves a great portion of execution time until 8 cores, after that, we only get small bonuses.
 
 Speed up doesn’t increase any more, then time also doesn’t increase. We can conclude the maximum number of cores that the program can deal with is 5 in that kind of palatalization. 
 
