@@ -1,1 +1,3 @@
 # Paral.lelisme
+
+* Apunts
