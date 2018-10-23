@@ -117,27 +117,27 @@ The following plots are representing the relation between different number of ta
 <img src="graficas_point/speed_up400.png" class="center"><img src="graficas_point/e_time400.png" class="center">
 
 <img src="graficas_point/paraver_400_8c.png">
-<note> Elapsed time, Speed Up plot for point decomposition version of mandel-omp.c program with 400 tasks.</note>
+<note> Elapsed time, Speed Up plot and paraver traces for point decomposition version of mandel-omp.c program with 400 tasks.</note>
 
 <img src="graficas_point/speed_up50.png" class="center"><img src="graficas_point/e_time50.png" class="center">
 
 <img src="graficas_point/paraver_50_8c.png">
-<note> Elapsed time and Speed Up plot for point decomposition version of mandel-omp.c program with 50 tasks.</note>
+<note> Elapsed time, Speed Up plot and paraver traces for point decomposition version of mandel-omp.c program with 50 tasks.</note>
 
 <img src="graficas_point/speed_up5.png" class="center"><img src="graficas_point/e_time5.png" class="center">
 
 <img src="graficas_point/paraver_5_8c.png">
-<note> Elapsed time and Speed Up plot for point decomposition version of mandel-omp.c program with 5 tasks.</note>
+<note> Elapsed time, Speed Up plot and paraver traces for point decomposition version of mandel-omp.c program with 5 tasks.</note>
 
 <img src="graficas_point/speed_up2.png" class="center"><img src="graficas_point/e_time2.png" class="center">
 
 <img src="graficas_point/paraver_2_8c.png">
-<note> Elapsed time and Speed Up plot for point decomposition version of mandel-omp.c program with 2 tasks.</note>
+<note> Elapsed time, Speed Up plot and paraver traces for point decomposition version of mandel-omp.c program with 2 tasks.</note>
 
 <img src="graficas_point/speed_up1.png" class="center"><img src="graficas_point/e_time1.png" class="center">
 
 <img src="graficas_point/paraver_1_8c.png">
-<note> Elapsed time and Speed Up plot for point decomposition version of mandel-omp.c program with 1 tasks.</note>
+<note> Elapsed time, Speed Up plot and paraver traces for point decomposition version of mandel-omp.c program with 1 tasks.</note>
 
 It appears that after 8 threads the speed-up and the execution time plots begin to normalize. Thats cause the mandelbrot only saves a great portion of execution time until 8 cores, after that, we only get small bonuses.
 
@@ -181,27 +181,27 @@ We have used parallelization pragmas in the row loop. Due to that we got a task 
 <img src="graficas_row/SU400.png" class="center"><img src="graficas_row/Time400.png" class="center">
 
 <img src="graficas_row/paraver_400_8c_row.png">
-<note> Elapsed time, Speed Up plot for point decomposition version of mandel-omp.c program with 400 tasks.</note>
+<note> Elapsed time, Speed Up plot and paraver traces for point decomposition version of mandel-omp.c program with 400 tasks.</note>
 
 <img src="graficas_row/SU50.png" class="center"><img src="graficas_row/Time50.png" class="center">
 
 <img src="graficas_row/paraver_50_8c_row.png">
-<note> Elapsed time and Speed Up plot for point decomposition version of mandel-omp.c program with 50 tasks.</note>
+<note> Elapsed time, Speed Up plot and paraver traces for point decomposition version of mandel-omp.c program with 50 tasks.</note>
 
-<img src="graficas_row/SU5.png" class="center"><img src="graficas_row/T5.png" class="center">
+<img src="graficas_row/SU5.png" class="center"><img src="graficas_row/Time5.png" class="center">
 
 <img src="graficas_row/paraver_5_8c_row.png">
-<note> Elapsed time and Speed Up plot for point decomposition version of mandel-omp.c program with 5 tasks.</note>
+<note> Elapsed time, Speed Up plot and paraver traces for point decomposition version of mandel-omp.c program with 5 tasks.</note>
 
-<img src="graficas_row/SU2.png" class="center"><img src="graficas_row/T2.png" class="center">
+We executed several times that version of mandel-omp program, however every time the output is one row with the result of the execution using 12 cores. The values obtained by the script are 1,17829457364341085271 for the speed up and 2,58 for the execution time.
 
 <img src="graficas_row/paraver_2_8c_row.png">
-<note> Elapsed time and Speed Up plot for point decomposition version of mandel-omp.c program with 2 tasks.</note>
+<note> Paraver traces of mandel-omp with 2 tasks</note>
 
-<img src="graficas_row/SU1.png" class="center"><img src="graficas_row/T1.png" class="center">
+<img src="graficas_row/SU1.png" class="center"><img src="graficas_row/Time1.png" class="center">
 
 <img src="graficas_row/paraver_1_8c_row.png">
-<note> Elapsed time and Speed Up plot for point decomposition version of mandel-omp.c program with 1 tasks.</note>
+<note> Elapsed time, Speed Up plot and paraver traces for point decomposition version of mandel-omp.c program with 1 tasks.</note>
 
 <div class="page">
 
@@ -229,6 +229,8 @@ The nearly identical result of the performance of dynamic and (static,1) may be 
 
 <img src="graficas_opcional/optional2_guided.png">
 <note>Speed up and elapsed time plots of mandel with omp for guided directive</note>
+
+A special kind of dynamic scheduling is the guided where smaller and smaller iteration blocks are given to each task as the work progresses.
 
 Guided option performs worst than the static and dynamic. It could be because it create bigger chunks.
 
