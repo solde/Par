@@ -34,7 +34,6 @@
         margin-right: auto;
     }
 </style>
-0,99562363
 
 # Lab 2
 
@@ -243,3 +242,9 @@ That one have very similar performance than the previous one, we can suppose tha
 <note>Speed up and elapsed time plots of mandel with omp for runtime directive</note>
 
 The last one performs even worst than guided. That's because the chunk size is calculated during the execution.
+
+<div class="page">
+
+## Conclusions
+
+In conclusion we have learnt different strategies to parallelize a program, and what does this methods carry. Some will be more adequate with a smaller granularity, due to overheads. Others are worth it if there are enough CPUs. Furthermore different pragmas can be used to help further get a higer P, protecting critical zones may allow us implement more parallalitzation to the code. Chosing how to distribuite the iterations in a loop can also have a great impact.
