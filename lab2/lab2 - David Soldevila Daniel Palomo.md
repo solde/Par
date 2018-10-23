@@ -18,6 +18,7 @@
     note {
         font-weight: lighter;
         background-color: rgba(100, 100, 100, 0.3);
+        font-style: italic;
     }
     p{
         text-align: justify;
