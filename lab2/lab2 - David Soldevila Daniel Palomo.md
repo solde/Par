@@ -48,12 +48,12 @@ In lab 2 we are going to work with Mandelbrot Set. It is a set of complex number
 
 ## Task decomposition and granularity analysis
 First of all, take a look at the task dependence graph of point decomposition. At left is the glaphycal version, we can obvserve that it cannot be paraleliced. However the non display (right window) version is paraleliced. Then, whe can conclude, som part of display code is causing some dependences.
-<img src=./amb_col.png> 
+<img src="tareador/amb_col.png"> 
 <note> Tareador captures of mandel-tar using point decomposition </note>
 
 Using row decomposition, the result is similar then the previous version. Display version still have the same problem, a data dependence, and non-display version is paralel. Obviously the granularity is bigger. Unlike point decomposition, now we are compting a big number of points with only one task. It is going to reduce overhead time but increasing the granularity.
 
-<img src=./sense_col.png>
+<img src="tareador/sense_col.png">
 <note> Tareador captures of mandel-tar using row decomposition </note>
 
 code:
@@ -67,6 +67,7 @@ code:
 
 (...)
 ```
+[mandel-omp.c](code/mandel-omp_v2.c)
 
 Scale cxolor and display point causes dependency in the graphycal version. It uses vars.
 
@@ -92,6 +93,7 @@ X11 use a variable, named X11_COLO_fake, with dependences. With openMP you can d
 #else
 (...)
 ```
+[mandel-omp.c](code/mandel-omp_v2.c)
 
 <div class="page">
 
@@ -101,7 +103,7 @@ With point decomposition, one task is created for every leaf of the three task s
 
 The following plots are the time plot and speed up plot which shows the dependence between time or speed up and the number of cores used while the execution of the program.
 
-<img src="2_SU.png" class="center"><img src="2_time.png" class="center">
+<img src="graficas_v1/2_SU.png" class="center"><img src="graficas_v1/2_time.png" class="center">
 
 <note> Elapsed time and Speed Up plot for point decomposition version of mandel-omp.c program.</note>
 
@@ -159,8 +161,6 @@ For the same reason of taskwait, taskgroup also introduces a deacrising performa
 
 We have used parallelization pragmas in the row loop. Due to that we got a task descompostion based in rows. This helps reducing overhead time added to the executable. However that could translate in a greater execution time. We would see this with the analysis of scalability.
 
-
-
 ```
 (...)
     #pragma omp parallel
@@ -171,6 +171,7 @@ We have used parallelization pragmas in the row loop. Due to that we got a task 
             complex z, c;
 (...)
 ```
+[mandel-omp.c](code/mandel-omp_v3.c)
 
 <img src="graficas_row/SU800.png" class="center"><img src="graficas_row/Time800.png" class="center">
 
@@ -215,6 +216,7 @@ for (int row = 0; row < height; ++row) {
     for (int col = 0; col < width; ++col) {
 (...)
 ```
+[mandel-omp.c](code/mandel-omp-for.c)
 Now, we are going to observe speed up and elapse time plots of mandel algorithm using differents kinds of directives.
 
 <img src="graficas_opcional/optional2_static.png">
