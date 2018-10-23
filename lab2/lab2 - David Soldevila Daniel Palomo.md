@@ -34,6 +34,7 @@
         margin-right: auto;
     }
 </style>
+0,99562363
 
 # Lab 2
 
@@ -201,3 +202,40 @@ We have used parallelization pragmas in the row loop. Due to that we got a task 
 <img src="graficas_row/paraver_1_8c_row.png">
 <note> Elapsed time and Speed Up plot for point decomposition version of mandel-omp.c program with 1 tasks.</note>
 
+<div class="page">
+
+## Optional: for–based parallelization
+
+Code:
+```
+(...)
+for (int row = 0; row < height; ++row) {
+    #pragma omp parallel
+    #pragma omp for
+    for (int col = 0; col < width; ++col) {
+(...)
+```
+Now, we are going to observe speed up and elapse time plots of mandel algorithm using differents kinds of directives.
+
+<img src="graficas_opcional/optional2_static.png">
+<note>Speed up and elapsed time plots of mandel with omp for static directive</note>
+
+<img src="graficas_opcional/optional2_dynamic.png">
+<note>Speed up and elapsed time plots of mandel with omp for dynamic directive</note>
+
+The nearly identical result of the performance of dynamic and (static,1) may be cause in this program the dynamic schedule choses 1 chunck.
+
+<img src="graficas_opcional/optional2_guided.png">
+<note>Speed up and elapsed time plots of mandel with omp for guided directive</note>
+
+Guided option performs worst than the static and dynamic. It could be because it create bigger chunks.
+
+<img src="graficas_opcional/optional2_auto.png">
+<note>Speed up and elapsed time plots of mandel with omp for auto directive</note>
+
+That one have very similar performance than the previous one, we can suppose that auto selects guided directive.
+
+<img src="graficas_opcional/optional2_runtime.png">
+<note>Speed up and elapsed time plots of mandel with omp for runtime directive</note>
+
+The last one performs even worst than guided. That's because the chunk size is calculated during the execution.
