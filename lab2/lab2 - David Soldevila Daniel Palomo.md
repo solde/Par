@@ -8,6 +8,9 @@
     h2{
         font-weight: bold;
     }
+    h3{
+        font-weight: bold;
+    }
     img {
         height: auto;
         width: 100%;
@@ -135,6 +138,18 @@ The following plots are representing the relation between different number of ta
 It appears that after 8 threads the speed-up and the execution time plots begin to normalize. Thats cause the mandelbrot only saves a great portion of execution time until 8 cores, after that, we only get small bonuses.
 
 Speed up doesn’t increase any more, then time also doesn’t increase. We can conclude the maximum number of cores that the program can deal with is 5 in that kind of palatalization. 
+
+### Optional: taskgroup vs. taskwait
+
+With taskwait enabled, we expirience a decrese in performance, thats due to the overheads of creating every task, and having to wait for each of them to finish. The more threads, the more tasks are in paralell, therefore the greater is the waiting time. It can be appreciated below.
+
+<img src="graficas_opcional/optional1_plot_1.png">
+<note>Speed-up and elapsed time plot of mandel-omp using taskwait</note>
+
+For the same reason of taskwait, taskgroup also introduces a deacrising performance. There is almost no difference between the two becouse in this program, the loops we are putting on pararell don’t create other tasks in them. This way, using both of the methods ( taskwait and taskgroup) gives the same result.
+
+<img src="graficas_opcional/optional1_plot_2.png">
+<note>Speed-up and elapsed time plot of mandel-omp using taskgroup</note>
 
 <div class="page">
 
