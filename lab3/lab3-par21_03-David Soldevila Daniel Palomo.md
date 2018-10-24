@@ -52,6 +52,7 @@ In this laboratory we are going to study the implementation of "divide and conqu
 ```
 ADD CODE
 ```
+**link code**
 
 We have added a tareador task in each of the recursive tasks, to fully visualize the possible parallelizations of the code.
 
