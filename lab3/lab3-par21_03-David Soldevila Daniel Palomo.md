@@ -49,6 +49,8 @@ In this laboratory we are going to study the implementation of "divide and conqu
 
 ### Task decomposition analysis with Tareador
 
+We have added a tareador task in each of the recursive tasks, to fully visualize the possible parallelizations of the code.
+
 <img src="tareador_captures/1c.png">
 <note>Trace of multisort-tareador using 1 core</note>
 
@@ -70,6 +72,7 @@ In this laboratory we are going to study the implementation of "divide and conqu
 <img src="tareador_captures/64c.png">
 <note>Trace of multisort-tareador using 64 core</note>
 
+<<<<<<< HEAD
 |NUM CPUs|time (ns)|SPEED UP|EFFICIENCY|
 |---|---|---|---|
 |1|20334411001|1|0.999360066616823|
@@ -90,5 +93,10 @@ The following pots represents number of cores vs. plot of time, speed up and eff
 
 <img src="tareador_captures/cores_vs_efficiency.png">
 <note>Number of cores vs. efficiency plot</note>
+=======
+The multisort program parallizes ideally untill 16 cores, when , the dependences between the multisort marge calls, as seen in the tareador capture of the tasks, doesn't allow for more. The efficiency drops going further than 16 threads (i.e fig: efficiency plot and 32,64 captures) Proving that adding more cpus is pointless.
+
+>>>>>>> 570a3b7df6f775ef51debfda4e21c3515f3b3d36
+
 
 <div class="page">
