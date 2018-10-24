@@ -47,7 +47,7 @@
 
 ### Task decomposition analysis with Tareador
 
-We have added a task of tareador in each of the recursive tasks, to fully visualize the possible parallelizations of the code.
+We have added a tareador task in each of the recursive tasks, to fully visualize the possible parallelizations of the code.
 
 <img src="tareador_captures/1c.png">
 <note>Trace of multisort-tareador using 1 core</note>
