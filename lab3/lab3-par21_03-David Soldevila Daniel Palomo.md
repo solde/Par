@@ -47,6 +47,8 @@
 
 ### Task decomposition analysis with Tareador
 
+We have added a task of tareador in each of the recursive tasks, to fully visualize the possible parallelizations of the code.
+
 <img src="tareador_captures/1c.png">
 <note>Trace of multisort-tareador using 1 core</note>
 
@@ -68,7 +70,7 @@
 <img src="tareador_captures/64c.png">
 <note>Trace of multisort-tareador using 64 core</note>
 
-The multisort program parallise as expected untill 16 cores, when , the dependences between the multisort marge calls, as seen in the tareador capture of the tasks, doesn't allow for more. The efficiency drops going further than 16 threads (i.e fig: efficiency plot and 32,64 captures) Proving that adding more cpus is pointless.
+The multisort program parallizes ideally untill 16 cores, when , the dependences between the multisort marge calls, as seen in the tareador capture of the tasks, doesn't allow for more. The efficiency drops going further than 16 threads (i.e fig: efficiency plot and 32,64 captures) Proving that adding more cpus is pointless.
 
 
 
