@@ -211,11 +211,12 @@ Code:
 (...)
 for (int row = 0; row < height; ++row) {
     #pragma omp parallel
-    #pragma omp for
+    #pragma omp for schendule(static, 1) // dynamic, guided, auto
     for (int col = 0; col < width; ++col) {
 (...)
 ```
 [mandel-omp.c](code/mandel-omp-for.c)
+
 Now, we are going to observe speed up and elapse time plots of mandel algorithm using differents kinds of directives.
 
 <img src="graficas_opcional/optional2_static.png">
