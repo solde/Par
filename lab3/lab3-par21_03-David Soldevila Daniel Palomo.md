@@ -39,6 +39,8 @@
 
 ## Introduction
 
+In this laboratory we are going to study the implementation of "divide and conquer" strategy using OpneMP paralization. **(ha de continuar)**
+
 <div class="page">
 
 ## Task decomposition analysis for Mergesort
@@ -68,5 +70,25 @@
 <img src="tareador_captures/64c.png">
 <note>Trace of multisort-tareador using 64 core</note>
 
+|NUM CPUs|time (ns)|SPEED UP|EFFICIENCY|
+|---|---|---|---|
+|1|20334411001|1|0.999360066616823|
+|2|10173716001|1.99872013323365|0.99938619627572|
+|4|5086725001|3.99754478510288|0.99938619627572|
+|8|2550595001|7.97241858979085|0.996552323723856|
+|16|1289922001|15.7640624667507|0.985253904171916|
+|32|1289909001|15.7642213406029|0.492631916893841|
+|64|1289909001|15.7642213406029|0.246315958446921|
+
+The following pots represents number of cores vs. plot of time, speed up and efficiency, respectively.
+
+<img src="tareador_captures/cores_vs_time.png">
+<note>Number of cores vs. execution time plot</note>
+
+<img src="tareador_captures/cores_vs_speedup.png">
+<note>Number of cores vs. speed up plot</note>
+
+<img src="tareador_captures/cores_vs_efficiency.png">
+<note>Number of cores vs. efficiency plot</note>
 
 <div class="page">
