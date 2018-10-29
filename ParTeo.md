@@ -15,23 +15,6 @@
         height: auto;
         width: 100%;
         
-    }<style>
-    h1{
-        color: red;
-        text-align: center;
-        font-size: 40px;
-        text-shadow: 2px 2px #ffcccc;      
-    }
-    h2{
-        font-weight: bold;
-    }
-    h3{
-        font-weight: bold;
-    }
-    img {
-        height: auto;
-        width: 100%;
-        
     }
     .center{
         width: 50%;
@@ -49,27 +32,7 @@
     .emoji{
         height: 2em;
     }
-
 </style>
-    .center{
-        width: 50%;
-        height: auto;
-        margin-left: auto;
-        margin-right: auto;
-        display: block;
-    }
-    note {
-        font-weight: lighter;
-    }
-    p{
-        text-align: justify;
-    }
-    .emoji{
-        height: 2em;
-    }
-
-</style>
-
 
 # Understanding parallelism
 
@@ -222,6 +185,5 @@ If tree strategy is in use, when a certain number of task are created or the gra
 * Out
 * InOut
  
-You can creat a dependence of a part of a task. For example a coss-iteration dependence.
+You can creat a dependence fro a part of a task. For example a coss-iteration dependence.
 
-*
