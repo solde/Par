@@ -14,7 +14,6 @@
     img {
         height: auto;
         width: 100%;
-        
     }
     .center{
         width: 50%;
@@ -252,4 +251,4 @@ the best possible "speed up". Calculate T2 and S2.
 
 | cpu 1 | ini1 | ini4 | comp1 | | Output |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-|cpu 2 |ini2 | ini3 | comp2 | comp3 |  |
+|**cpu 2** | **ini2** | **ini3** | **comp2** | **comp3** |  |
