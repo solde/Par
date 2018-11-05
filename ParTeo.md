@@ -29,9 +29,6 @@
     p{
         text-align: justify;
     }
-    .emoji{
-        height: 2em;
-    }
 </style>
 
 # Understanding parallelism
@@ -110,7 +107,7 @@ Each cpu with n<sup>2</sup>/P elements. Tasks compute segments of n/c rows by c 
 
 Then, time acquire the following form:
 
-<img src="Timeex4.png">
+<img src="https://github.com/solde/Par/blob/master/Timeex4.png?raw=true">
 <img src="SpeedUpex4.png" class="center">
 
 <div class=page>
@@ -187,3 +184,72 @@ If tree strategy is in use, when a certain number of task are created or the gra
  
 You can creat a dependence fro a part of a task. For example a coss-iteration dependence.
 
+## Task ordering constrains
+
+* Task ordering constraints
+* Data sharing constraints
+
+## Problem 1
+
+Given the following C code with tasks identified using the T areador API:
+
+```
+#define N 4
+int m[N][N];
+
+// initialization
+for (int i=0; i<N; i++) {
+    tareador_start_task ("for_initialize");
+    for (int k=i; k<N; k++) {
+        if (k == i) modify_d(&m[i][i], i, i);
+        else {
+            modify_nd (&m[i][k], i, k);
+            modify_nd (&m[k][i], k, i);
+        }
+    }
+    tareador_end_task ("for-initialize");
+}
+
+// computation
+for (int i=0; i<N; i++) {
+    tareador_start_task ("for_compute");
+    for (int k=i+1; k<N; k++) {
+        int tmp = m[i][k];
+        m[i][k] = m[k][i];
+        m[k][i] = tmp;
+    }
+    tareador_end_task ("for-compute");
+}
+
+// print results
+tareador_star_task ("output");
+print_results(m);
+tareador_end_task ("output");
+```
+
+Assuming that: 1) the execution of the modify_d routine takes 10 time units and the execution of the
+modify_nd routines takes 5 time units; 2) each internal iteration of the computation loop (i.e. each
+internal iteration of the for_compute task) takes 5 time units; and 3) the execution of the output task takes
+100 time units.
+
+1. Draw the task dependence graph (TDG), indicating for each node its cost in terms of execution time
+(in time units).
+    
+<img src="img/graphp1.png">
+
+2. Compute the values for T1, T∞, the parallel fraction (phi) as well as the potential parallelism
+
+T<sub>1</sub> = 230
+
+T<sub>inf</sub> = 155
+
+Phy = 130/230
+
+Par = T1/Tinf = 230/155
+
+3. Indicate which would be the most appropriate task assignment on two processors in order to obtain
+the best possible "speed up". Calculate T2 and S2.
+
+| cpu 1 | ini1 | ini4 | comp1 | | Output |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+|cpu 2 |ini2 | ini3 | comp2 | comp3 |  |
