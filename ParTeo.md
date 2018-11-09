@@ -3,7 +3,7 @@
         color: red;
         text-align: center;
         font-size: 40px;
-        text-shadow: 2px 2px #ffcccc;      
+        text-shadow: 2px 2px #ffcccc;
     }
     h2{
         font-weight: bold;
@@ -15,19 +15,27 @@
         height: auto;
         width: 100%;
     }
+    note {
+        font-weight: lighter;
+        background-color: rgba(100, 100, 100, 0.3);
+        font-style: italic;
+    }
+    p{
+        text-align: justify;
+    }
+    img{
+        width: 100%;
+        height: auto;
+    }
     .center{
         width: 50%;
         height: auto;
         margin-left: auto;
         margin-right: auto;
-        display: block;
     }
-    note {
-        font-weight: lighter;
-    }
-    p{
-        text-align: justify;
-    }
+    module{
+		border-top: 1px solid;
+	}
 </style>
 
 # Understanding parallelism

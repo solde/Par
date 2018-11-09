@@ -33,6 +33,9 @@
         margin-left: auto;
         margin-right: auto;
     }
+	module{
+		border-top: 1px solid;
+	}
 </style>
 
 # Lab 2
