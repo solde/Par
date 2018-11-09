@@ -34,6 +34,12 @@
         margin-right: auto;
         display: block;
     }
+    .half{
+        width: 50%;
+        height: auto;
+        margin-left: auto;
+        margin-right: auto;
+    }
     .mini{
         width: 30%;
         height: auto;
@@ -42,6 +48,9 @@
         display: block;
     }
 </style>
+
+# paraver capture for cuttoff
+# cutoff plots
 
 # LAB 3
 
@@ -98,14 +107,11 @@ We have added a tareador task in each of the recursive tasks, to fully visualize
 
 The following pots represents number of cores vs. plot of time, speed up and efficiency, respectively.
 
-<img src="tareador_captures/cores_vs_time.png">
-<note>Number of cores vs. execution time plot</note>
-
-<img src="tareador_captures/cores_vs_speedup.png">
-<note>Number of cores vs. speed up plot</note>
+<img class="half" src="tareador_captures/cores_vs_time.png"><img class="half" src="tareador_captures/cores_vs_speedup.png">
+<note>Number of cores vs. execution time plot and number of cores vs. speed up plot.</note>
 
 <img src="tareador_captures/cores_vs_efficiency.png">
-<note>Number of cores vs. efficiency plot</note>
+<note>Number of cores vs. efficiency plot.</note>
 
 The multisort program parallizes ideally untill 16 cores, when , the dependences between the multisort marge calls, as seen in the tareador capture of the tasks, doesn't allow for more. The efficiency drops going further than 16 threads (i.e fig: efficiency plot and 32,64 captures) Proving that adding more CPUs is pointless.
 
@@ -114,6 +120,8 @@ The multisort program parallizes ideally untill 16 cores, when , the dependences
 ## Shared-memory parallelization with OpenMP tasks
 
 ### Task cut–off mechanism
+
+Firs of all we are going to implement two versions of multisort algorithm. One using a tree strategy and another using leaf strategy.
 
 Tree stragey code:
 ```
@@ -164,7 +172,7 @@ void multisort(long n, T data[n], T tmp[n]) {
 	}
 }
 ```
-[multisort-omp-cutoff.c](codes/multisort-omp-tree.c)
+[multisort-omp-tree.c](codes/multisort-omp-tree.c)
 
 <img class="mini" src="paraver_captures_s2/tree_paraver_1.png">
 <note> Paraver capture of number of tasks created using tree strategy</note>
@@ -195,10 +203,12 @@ void multisort(long n, T data[n], T tmp[n]) {
 	}
 }
 ```
-[multisort-omp-cutoff.c](codes/multisort-omp-leaf.c)
+[multisort-omp-leaf.c](codes/multisort-omp-leaf.c)
 
 <img class="mini" src="paraver_captures_s2/leaf_paraver_1.png">
 <note> Paraver capture of number of tasks created using leaf strategy</note>
+
+For a cut-off stragegy we need to marge tree and leaf methods. Until a specified number of created tasks the program will create tasks like tree strategy, recursively. Then, when the limit is reached, the program is going to create sequentially one task for each leaf of leaf task.
 
 Cut-off strategy code:
 
@@ -291,3 +301,14 @@ void multisort(long n, T data[n], T tmp[n]) {
 
 <img class="mini" src="paraver_captures_s2/cutoff_paraver_1.png">
 <note> Paraver capture of number of tasks created using cut-off strategy</note>
+
+Donw bellow we are going to study the strong scalability of the three diferent versions of the multisort algorithm using cores vs time/speed up plots.
+
+<img class="half" src="plots/time_tree.png"><img class="half" src="plots/SU_tree.png">
+<note>Elapsed time plot and speed up plot for tree version of multisort algorithm</note>
+
+<img class="half" src="plots/time_leaf.png"><img class="half" src="plots/SU_leaf.png">
+<note>Elapsed time plot and speed up plot for leaf version of multisort algorithm</note>
+
+<img class="half" src="plots/time_cutoff.png"><img class="half" src="plots/SU_cutoff.png">
+<note>Elapsed time plot and speed up plot for cutoff version of multisort algorithm</note>
