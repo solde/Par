@@ -38,7 +38,7 @@ void merge(long n, T left[n], T right[n], T result[n*2], long start, long length
         } else {
                 // Recursive decomposition
                 #pragma omp taskgroup
-                {
+                {	
 					#pragma omp task
 					merge(n, left, right, result, start, length/2);
 					#pragma omp task
@@ -70,7 +70,7 @@ void multisort(long n, T data[n], T tmp[n]) {
 					//#pragma omp taskwait
 				}
 				
-	        #pragma omp task
+				#pragma omp task
                 merge(n/2L, &tmp[0], &tmp[n/2L], &data[0], 0, n);
 	} else {
 		// Base case
@@ -80,6 +80,7 @@ void multisort(long n, T data[n], T tmp[n]) {
 
 static void initialize(long length, T data[length]) {
    long i;
+   #pragma omp parallel for private(i)
    for (i = 0; i < length; i++) {
       if (i==0) {
          data[i] = rand();
@@ -91,6 +92,7 @@ static void initialize(long length, T data[length]) {
 
 static void clear(long length, T data[length]) {
    long i;
+      #pragma omp parallel for private(i)
    for (i = 0; i < length; i++) {
       data[i] = 0;
    }

@@ -1,9 +1,9 @@
 <style>
+    @import url('https://fonts.googleapis.com/css?family=VT323');
     h1{
-        color: red;
         text-align: center;
-        font-size: 40px;
-        text-shadow: 2px 2px #ffcccc;
+        font-size: 50px;
+        font-family: 'VT323', monospace;
     }
     h2{
         font-weight: bold;
@@ -32,10 +32,20 @@
         height: auto;
         margin-left: auto;
         margin-right: auto;
+        display: block;
     }
     module{
 		border-top: 1px solid;
 	}
+    .half{
+        width: 50%;
+        height: auto;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .no_border{
+        margin: 0px;
+    }
 </style>
 
 # Understanding parallelism
@@ -56,7 +66,7 @@ Efficiency (Eff<sub>p</sub>): it is a measure of the fraction of time for which 
 ### Par_Fraction
 > φ= T<sub>seq_time_of_par_part</sub> / T<sub>seq_exec</sub>
 
-<img src="./amdahl.png">
+<img class="half" src="./amdahl.png">
 
 Note: <note>If P approach to infinit, φ/P approach to 0, then S<sub>p</sub> = 1/(1-φ).</note>
 
@@ -82,7 +92,7 @@ Ex:
 > - Memory (extra memory to obtain a palalel algorithm)
 > - Contention (competition for the access to shared resources)
 
-<center><img src="T1.png"></center>
+<img class="half" src="T1.png">
 
 ## How to model data sharing overload?
 Example:
@@ -114,8 +124,8 @@ Each cpu with n<sup>2</sup>/P elements. Tasks compute segments of n/c rows by c 
 
 Then, time acquire the following form:
 
-<img src="https://github.com/solde/Par/blob/master/Timeex4.png?raw=true">
-<img src="SpeedUpex4.png" class="center">
+<img class="half" src="Timeex4.png">
+<img class="half" src="SpeedUpex4.png" class="center">
 
 <div class=page>
 
@@ -260,3 +270,112 @@ the best possible "speed up". Calculate T2 and S2.
 | cpu 1 | ini1 | ini4 | comp1 | | Output |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 |**cpu 2** | **ini2** | **ini3** | **comp2** | **comp3** |  |
+
+<div class="page">
+
+# Introduction to shared-memory parallel architectures
+
+## 3 Uniprocessor parallelism
+
+### Pipelining
+
+    Execution of single instruction divided in multiple stages.
+
+Overlap the execution of different stages of consecutive instructions to reach the ideal CPI (CPI = 1).
+
+If pipeline is blocked by an instruction that is whaiting for data, the processor can execute code out of order.
+
+### Caches
+
+* The principle of temporal and spatial locality
+    
+        The instructions could be referenced again soon or near addresses tends to be referenced soon.
+
+* Line or block
+
+        Cache are going to store near by data that are potientally referenced.
+
+* Hit/Miss
+
+### Special instructions
+
+* ILP
+
+        Instruction Level Parallelism 
+
+* TLP
+
+        Thread Level Parallelism 
+
+* DLP
+
+        Data Level Parallelism 
+
+### Who exploits this uniprocessor parallelism?
+
+* Software pipelining to statically schedule ILP.
+* Unrolling loops to allow the processor to exploits ILP.
+* Data distribution to efficiently exploit DLP.
+* Data Blocking for cache.
+
+## Symmetric multi–processor architectures
+
+<img src = "img/multiprocessor_cassification.png">
+
+## Symmetric multi–processor architectures
+
+* Abbreviated SMP
+        
+        Two or more identical processors are connected to a single shared memory.
+
+        Interaction Network.
+
+* I Symmetric multiprocessing
+
+        a single OS instance on the SMP.
+
+* Uniform Memory Access
+  
+        Access to shared data with load/store instructions.
+
+        The bottleneck is the bandwidth of the interconnection network and memory.
+
+## Coherence protocols
+
+* Write update
+
+        Forces to update all other copies
+
+        Higher bus traffic
+
+* Write invalidate
+
+        Forcves to invalidate all other copies
+
+        The new value is provided to other processors when requered or when flusehd form cache.
+
+## Snooping
+
+### MSI write-invalidate snooping protocol
+
+States:
+
+    * Modified
+    * CPU events
+    * Bus transactions
+
+<img src="img/snooping.png">
+
+### Minimizing sharing
+
+#### False sharing
+
+* Cache block may also introduce artefacts: two distinct
+variables in the same cache block
+* Technique: allocate data used by each processor contiguously,
+or at least avoid interleaving in memory
+* Example problem: an array of ints, one written frequently by
+each processor (many ints per cache line)
+
+## Multicore Architecture
+
