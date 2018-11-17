@@ -40,7 +40,7 @@ void multisort(long n, T data[n], T tmp[n]) {
 				// Recursive decomposition
 				tareador_start_task("multisort 0");
 				multisort(n/4L, &data[0], &tmp[0]);
-		   tareador_end_task("multisort 0");
+		   		tareador_end_task("multisort 0");
 				tareador_start_task("multisort 1");
 				multisort(n/4L, &data[n/4L], &tmp[n/4L]);
 				tareador_end_task("multisort 1");

@@ -32,46 +32,41 @@ void basicsort(long n, T data[n]);
 void basicmerge(long n, T left[n], T right[n], T result[n*2], long start, long length);
 
 void merge(long n, T left[n], T right[n], T result[n*2], long start, long length) {
-        if (length < MIN_MERGE_SIZE*2L) {
-                // Base case
-                basicmerge(n, left, right, result, start, length);
-        } else {
-                // Recursive decomposition
-                #pragma omp taskgroup
-                {	
-					#pragma omp task
-					merge(n, left, right, result, start, length/2);
-					#pragma omp task
-					merge(n, left, right, result, start + length/2, length/2);
-				}
-        }
+   if (length < MIN_MERGE_SIZE*2L) {
+      // Base case
+      basicmerge(n, left, right, result, start, length);
+   } else {
+      // Recursive decomposition
+      #pragma omp task depend(in:left,right) depend(out:result)
+      merge(n, left, right, result, start, length/2);
+      #pragma omp task depend(in:left,right) depend(out:result)
+      merge(n, left, right, result, start + length/2, length/2);
+      
+      #pragma omp taskwait
+   }
 }
 
 void multisort(long n, T data[n], T tmp[n]) {
         if (n >= MIN_SORT_SIZE*4L) {
-                // Recursive decomposition
-                #pragma omp taskgroup
-                {
-					#pragma omp task
-					multisort(n/4L, &data[0], &tmp[0]);
-					#pragma omp task
-					multisort(n/4L, &data[n/4L], &tmp[n/4L]);
-					#pragma omp task
-					multisort(n/4L, &data[n/2L], &tmp[n/2L]);
-					#pragma omp task
-					multisort(n/4L, &data[3L*n/4L], &tmp[3L*n/4L]);
-				}
-				#pragma omp taskgroup
-				{
-					#pragma omp task
-					merge(n/4L, &data[0], &data[n/4L], &tmp[0], 0, n/2L);
-					#pragma omp task
-					merge(n/4L, &data[n/2L], &data[3L*n/4L], &tmp[n/2L], 0, n/2L);
-					//#pragma omp taskwait
-				}
-				
-				#pragma omp task
-                merge(n/2L, &tmp[0], &tmp[n/2L], &data[0], 0, n);
+         // Recursive decomposition
+         #pragma omp task depend(out:data[0])
+         multisort(n/4L, &data[0], &tmp[0]);
+         #pragma omp task depend(out:data[n/4L])
+         multisort(n/4L, &data[n/4L], &tmp[n/4L]);
+         #pragma omp task depend(out:data[n/2L])
+         multisort(n/4L, &data[n/2L], &tmp[n/2L]);
+         #pragma omp task depend(out:data[3L*n/4L])
+         multisort(n/4L, &data[3L*n/4L], &tmp[3L*n/4L]);
+
+         #pragma omp task depend(in: data[0], data[n/4L]) depend(out: tmp[0])
+         merge(n/4L, &data[0], &data[n/4L], &tmp[0], 0, n/2L);
+         #pragma omp task depend(in: data[n/2L], data[3L*n/4L]) depend(out: tmp[n/2L])
+         merge(n/4L, &data[n/2L], &data[3L*n/4L], &tmp[n/2L], 0, n/2L);
+
+         #pragma omp task depend(in: tmp[0],tmp[n/2L])
+         merge(n/2L, &tmp[0], &tmp[n/2L], &data[0], 0, n);
+            
+         #pragma omp taskwait
 	} else {
 		// Base case
 		basicsort(n, data);
@@ -80,7 +75,6 @@ void multisort(long n, T data[n], T tmp[n]) {
 
 static void initialize(long length, T data[length]) {
    long i;
-   #pragma omp parallel for private(i)
    for (i = 0; i < length; i++) {
       if (i==0) {
          data[i] = rand();
@@ -92,7 +86,6 @@ static void initialize(long length, T data[length]) {
 
 static void clear(long length, T data[length]) {
    long i;
-      #pragma omp parallel for private(i)
    for (i = 0; i < length; i++) {
       data[i] = 0;
    }

@@ -1,9 +1,9 @@
 <style>
+    @import url('https://fonts.googleapis.com/css?family=VT323');
     h1{
-        color: red;
         text-align: center;
         font-size: 50px;
-        text-shadow: 2px 2px #ffcccc;
+        font-family: 'VT323', monospace;
     }
     h2{
         font-weight: bold;
@@ -52,7 +52,11 @@
 
 ## Introduction
 
-In this laboratory we are going to study the implementation of "divide and conquer" strategy using OpneMP paralization. **(ha de continuar)**
+In this laboratory we are going to discuss about the implementation of "divide and conquer" strategy using OpneMP paralization. Fist of all, we will take a look to dependence graph and the potential performance of the algorithm with diferent number of cores.
+
+At second chapter, we will discuss about implementation and the performance of leaf, tree and cut-off. Using paraver and plots of elapsed tiem and speed up.
+
+At last, we are going to modify the implementation of tree method in order to get a task dependence based parallization strategy. Then we are going to compare the performance.
 
 <div class="page">
 
@@ -253,7 +257,7 @@ void multisort(long n, T data[n], T tmp[n]) {
 <img class="mini" src="paraver_captures_s2/leaf_paraver_1.png">
 <note> Paraver capture of number of tasks created using leaf strategy</note>
 
-For a cut-off stragegy we need to marge tree and leaf methods. Until a specified number of created tasks the program will create tasks like tree strategy, recursively. Then, when the limit is reached, the program is going to create sequentially one task for each leaf of leaf task.
+For the cut-off stragegy we need to marge tree and leaf methods. Until a specified number of created tasks the program will create tasks like tree strategy, recursively. Then, when the limit is reached, the program is going to create sequentially one task for each leaf of leaf task.
 
 Cut-off strategy code:
 
@@ -368,46 +372,41 @@ At last, we are going to implement, based in tree strategy, a task dependence mo
 
 ```
 void merge(long n, T left[n], T right[n], T result[n*2], long start, long length) {
-        if (length < MIN_MERGE_SIZE*2L) {
-                // Base case
-                basicmerge(n, left, right, result, start, length);
-        } else {
-                // Recursive decomposition
-                #pragma omp taskgroup
-                {	
-					#pragma omp task
-					merge(n, left, right, result, start, length/2);
-					#pragma omp task
-					merge(n, left, right, result, start + length/2, length/2);
-				}
-        }
+   if (length < MIN_MERGE_SIZE*2L) {
+      // Base case
+      basicmerge(n, left, right, result, start, length);
+   } else {
+      // Recursive decomposition
+      #pragma omp task depend(in:left,right) depend(out:result)
+      merge(n, left, right, result, start, length/2);
+      #pragma omp task depend(in:left,right) depend(out:result)
+      merge(n, left, right, result, start + length/2, length/2);
+      
+      #pragma omp taskwait
+   }
 }
 
 void multisort(long n, T data[n], T tmp[n]) {
         if (n >= MIN_SORT_SIZE*4L) {
-                // Recursive decomposition
-                #pragma omp taskgroup
-                {
-					#pragma omp task
-					multisort(n/4L, &data[0], &tmp[0]);
-					#pragma omp task
-					multisort(n/4L, &data[n/4L], &tmp[n/4L]);
-					#pragma omp task
-					multisort(n/4L, &data[n/2L], &tmp[n/2L]);
-					#pragma omp task
-					multisort(n/4L, &data[3L*n/4L], &tmp[3L*n/4L]);
-				}
-				#pragma omp taskgroup
-				{
-					#pragma omp task
-					merge(n/4L, &data[0], &data[n/4L], &tmp[0], 0, n/2L);
-					#pragma omp task
-					merge(n/4L, &data[n/2L], &data[3L*n/4L], &tmp[n/2L], 0, n/2L);
-					//#pragma omp taskwait
-				}
-				
-				#pragma omp task
-                merge(n/2L, &tmp[0], &tmp[n/2L], &data[0], 0, n);
+			// Recursive decomposition
+			#pragma omp task depend(out:data[0])
+			multisort(n/4L, &data[0], &tmp[0]);
+			#pragma omp task depend(out:data[n/4L])
+			multisort(n/4L, &data[n/4L], &tmp[n/4L]);
+			#pragma omp task depend(out:data[n/2L])
+			multisort(n/4L, &data[n/2L], &tmp[n/2L]);
+			#pragma omp task depend(out:data[3L*n/4L])
+			multisort(n/4L, &data[3L*n/4L], &tmp[3L*n/4L]);
+
+			#pragma omp task depend(in: data[0], data[n/4L]) depend(out: tmp[0])
+			merge(n/4L, &data[0], &data[n/4L], &tmp[0], 0, n/2L);
+			#pragma omp task depend(in: data[n/2L], data[3L*n/4L]) depend(out: tmp[n/2L])
+			merge(n/4L, &data[n/2L], &data[3L*n/4L], &tmp[n/2L], 0, n/2L);
+
+			#pragma omp task depend(in: tmp[0],tmp[n/2L])
+			merge(n/2L, &tmp[0], &tmp[n/2L], &data[0], 0, n);
+			
+			#pragma omp taskwait
 	} else {
 		// Base case
 		basicsort(n, data);
@@ -416,17 +415,20 @@ void multisort(long n, T data[n], T tmp[n]) {
 ```
 [multisort-omp-depencences.c](codes/multisort-omp-depencences.c)
 
+In marge function, every marge call depends of left and write as in and result as out. Is is caused bey basicmarge because it have to read from right to left and write to result.
 
+In multisort function, multisort recursive calls needs to write on data array, then it has a out dependence in data array. Every marge call depends of a block of the data array and a it needs to write in tmp array at sema possition than data array.
 
+<img class=center src="plots/time_dep.png">
+<img class=half src="plots/SU1_dep.png"><img class=half src="plots/SU2_dep.png">
+
+With the a fist look at the plots we can see that executing the program with more than 4 cores the speed up. 
 
 <div class="page">
 
 ## Conclusions
 
-* Acabar explicar coses s2
-    * explicar cutoff
 * Fer s3
     * tot
     * opcionals
 * Fer conclusió
-* Acabar intro

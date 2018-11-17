@@ -32,19 +32,19 @@ void basicsort(long n, T data[n]);
 void basicmerge(long n, T left[n], T right[n], T result[n*2], long start, long length);
 
 void merge(long n, T left[n], T right[n], T result[n*2], long start, long length) {
-        if (length < MIN_MERGE_SIZE*2L) {
-                // Base case
-                basicmerge(n, left, right, result, start, length);
-        } else {
-                // Recursive decomposition
-                #pragma omp taskgroup
-                {	
-					#pragma omp task
-					merge(n, left, right, result, start, length/2);
-					#pragma omp task
-					merge(n, left, right, result, start + length/2, length/2);
-				}
-        }
+   if (length < MIN_MERGE_SIZE*2L) {
+      // Base case
+      basicmerge(n, left, right, result, start, length);
+      } else {
+         // Recursive decomposition
+         #pragma omp taskgroup
+         {	
+         #pragma omp task
+         merge(n, left, right, result, start, length/2);
+         #pragma omp task
+         merge(n, left, right, result, start + length/2, length/2);
+      }
+   }
 }
 
 void multisort(long n, T data[n], T tmp[n]) {
