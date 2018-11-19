@@ -171,7 +171,7 @@ The multisort program parallizes ideally untill 16 cores, when , the dependences
 
 ### Task cut–off mechanism
 
-Firs of all we are going to implement two versions of multisort algorithm. One using a tree strategy and another using leaf strategy.
+First of all, we are going to implement two versions of multisort algorithm. One using a tree strategy and another using leaf strategy.
 
 Tree stragey code:
 ```
@@ -227,7 +227,7 @@ void multisort(long n, T data[n], T tmp[n]) {
 <img class="mini" src="paraver_captures_s2/tree_paraver_1.png">
 <note> Paraver capture of number of tasks created using tree strategy</note>
 
-Lear stragegy code:
+Leaf stragegy code:
 ```
 void multisort(long n, T data[n], T tmp[n]) {
         if (n >= MIN_SORT_SIZE*4L) {
@@ -352,7 +352,7 @@ void multisort(long n, T data[n], T tmp[n]) {
 <img class="mini" src="paraver_captures_s2/cutoff_paraver_1.png">
 <note> Paraver capture of number of tasks created using cut-off strategy</note>
 
-Donw bellow we are going to study the strong scalability of the three diferent versions of the multisort algorithm using cores vs time/speed up plots.
+Down bellow we are going to study the strong scalability of the three diferent versions of the multisort algorithm using cores vs time/speed up plots.
 
 <img class="half" src="plots/time_tree.png"><img class="half" src="plots/SU_tree.png">
 <note>Elapsed time plot and speed up plot for tree version of multisort algorithm</note>
@@ -423,43 +423,39 @@ In multisort function, multisort recursive calls needs to write on data array, t
 <img class=center src="plots/time_dep.png">
 <img class=half src="plots/SU1_dep.png"><img class=half src="plots/SU2_dep.png">
 
-With the a fist look at the plots we can see that executing the program with more than 4 cores the speed up. 
+With the a fist look at the plots we can see that executing the program with more than 4 cores the speed up. You also can observe that The speed up 2 plot, that taks the speed up of the parallel part of the program, the speed up is from 1 to 1.5 times greater than the speed up of the whole program (speed-up 1 plot).
 
 <div class="page">
 	
 ## Optional 2 - Parallelization of initialize and clear
-In this optional we expanded the tree versions adding paralelitzation in the initialization of the tmp and data vectors. We choosed to not implement any specific schedule to the for, becouse they didn't improve over the default version. 
+In this optional we expanded the tree versions adding paralelitzation in the initialization of the tmp and data vectors. We choosed to not implement any specific schedule to the for, becouse they didn't improve over the default version.
 
-
-//IMG
-
+<img class=half src="plots/opt_time.png"><img class=half src="plots/opt_su.png">
 
 We got an overall better time than the basic tree version, even if it's not very noticable, it's worth the implementation if done correctly. For example, scheduling with static and n=1, pushes the initialize time up to 2s.
 
-```
+[multisort-omp-optional2.c] (codes/multisort-omp-optional2.c)
+...
 static void initialize(long length, T data[length]) {
-	long i;
-	#pragma omp parallel for private(i)
-	for (i = 0; i < length; i++) {
-    	if (i==0) {
-        	data[i] = rand();
-    	} else {
-		data[i] = ((data[i-1]+1) * i * 104723L) % N;
-		}
-   	}
+   long i;
+   #pragma omp parallel for private(i)
+   for (i = 0; i < length; i++) {
+      if (i==0) {
+         data[i] = rand();
+      } else {
+         data[i] = ((data[i-1]+1) * i * 104723L) % N;
+      }
+   }
 }
 
 static void clear(long length, T data[length]) {
-	long i;
-	#pragma omp parallel for private(i)
-	for (i = 0; i < length; i++) {
-		data[i] = 0;
-	}	
+   long i;
+      #pragma omp parallel for private(i)
+   for (i = 0; i < length; i++) {
+      data[i] = 0;
+   }
 }
-```
-[multisort-omp-optional2.c](codes/multisort-omp-optional2.c)
-
-<div class="page">
+...
 
 ## Conclusions
 In this assigment, we explored different ways to paralelizise a recursive portion of a program. Tree or leaf.
