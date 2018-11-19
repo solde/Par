@@ -46,9 +46,12 @@
     .no_border{
         margin: 0px;
     }
+    .emoji {
+        height: 1.2em;
+    }
 </style>
 
-# Understanding parallelism
+# :shit: Understanding parallelism :shit:
 
 ## SpeedUp vs Efficiency
 
@@ -68,7 +71,7 @@ Efficiency (Eff<sub>p</sub>): it is a measure of the fraction of time for which 
 
 <img class="half" src="./amdahl.png">
 
-Note: <note>If P approach to infinit, φ/P approach to 0, then S<sub>p</sub> = 1/(1-φ).</note>
+<note>If P approach to infinit, φ/P approach to 0, then S<sub>p</sub> = 1/(1-φ).</note>
 
 Ex:
 
@@ -134,11 +137,11 @@ Then, time acquire the following form:
 <img src="Diagram1.png">
 
 Types:
-* Lineal Task decomposition
+- Lineal Task decomposition
 >   Code block or procedure
-* Iterative task decomposition
+- Iterative task decomposition
 >   Iterative constructs
-* Recursive task decomposition
+- Recursive task decomposition
 >   Recursive procedures
 
 ## Decomposition Strategies
@@ -169,42 +172,44 @@ If tree strategy is in use, when a certain number of task are created or the gra
 
 #### Constrains in the paralel execution of tasks
 
-* Task ordering costraints
->    They force the execution of tasks in a requiered order
-* Data sharing constraints
->    They force the access to data to fulfil certain properties.
+- Task ordering costraints
+
+        They force the execution of tasks in a requiered order
+- Data sharing constraints
+    
+        They force the access to data to fulfil certain properties.
 
 ### Task ordering constraints
 
-* Control flow constraints
+- Control flow constraints
 >   The creation of a task depends on the outcome (decision) of one or more previous tasks.
-* Data flow constraints
+- Data flow constraints
 >   The execution of a task can not startuntil one or more previous tasks have computed some data.
 
 ### Task synchronization in Open MP
 
-* Thread barriers
+- Thread barriers
 >   Wait for all threads to finish previous work.
-* Task barriers
-    *  taskwait
+- Task barriers
+    -taskwait
 >               Suspends the current task waiting on the completion of child tasks of the current task. (stand-alone directive).
-    *  taskgorup
+    -taskgorup
 >               Suspends the current task at the end of structured block waiting on completion of child tasks of the current task and their descendent tasks
 
-* Task dependences
+- Task dependences
 
 ### Task dependences
 
-* IN
-* Out
-* InOut
+- IN
+- Out
+- InOut
  
 You can creat a dependence fro a part of a task. For example a coss-iteration dependence.
 
 ## Task ordering constrains
 
-* Task ordering constraints
-* Data sharing constraints
+- Task ordering constraints
+- Data sharing constraints
 
 ## Problem 1
 
@@ -287,54 +292,52 @@ If pipeline is blocked by an instruction that is whaiting for data, the processo
 
 ### Caches
 
-* The principle of temporal and spatial locality
-    
+- The principle of temporal and spatial locality
+
         The instructions could be referenced again soon or near addresses tends to be referenced soon.
 
-* Line or block
+- Line or block
 
         Cache are going to store near by data that are potientally referenced.
 
-* Hit/Miss
+- Hit/Miss
 
 ### Special instructions
 
-* ILP
+- ILP
 
-        Instruction Level Parallelism 
+        Instruction Level Parallelism
 
-* TLP
+- TLP
 
-        Thread Level Parallelism 
+        Thread Level Parallelism
 
-* DLP
+- DLP
 
-        Data Level Parallelism 
+        Data Level Parallelism
 
-### Who exploits this uniprocessor parallelism?
+### Who exploits this uniprocessor parallelism
 
-* Software pipelining to statically schedule ILP.
-* Unrolling loops to allow the processor to exploits ILP.
-* Data distribution to efficiently exploit DLP.
-* Data Blocking for cache.
+- Software pipelining to statically schedule ILP.
+- Unrolling loops to allow the processor to exploits ILP.
+- Data distribution to efficiently exploit DLP.
+- Data Blocking for cache.
 
 ## Symmetric multi–processor architectures
 
 <img src = "img/multiprocessor_cassification.png">
 
-## Symmetric multi–processor architectures
+- Abbreviated SMP
 
-* Abbreviated SMP
-        
         Two or more identical processors are connected to a single shared memory.
 
         Interaction Network.
 
-* I Symmetric multiprocessing
+- I Symmetric multiprocessing
 
         a single OS instance on the SMP.
 
-* Uniform Memory Access
+- Uniform Memory Access
   
         Access to shared data with load/store instructions.
 
@@ -342,13 +345,13 @@ If pipeline is blocked by an instruction that is whaiting for data, the processo
 
 ## Coherence protocols
 
-* Write update
+- Write update
 
         Forces to update all other copies
 
         Higher bus traffic
 
-* Write invalidate
+- Write invalidate
 
         Forcves to invalidate all other copies
 
@@ -360,9 +363,9 @@ If pipeline is blocked by an instruction that is whaiting for data, the processo
 
 States:
 
-    * Modified
-    * CPU events
-    * Bus transactions
+    - Modified
+    - CPU events
+    - Bus transactions
 
 <img src="img/snooping.png">
 
@@ -370,12 +373,65 @@ States:
 
 #### False sharing
 
-* Cache block may also introduce artefacts: two distinct
+- Cache block may also introduce artefacts: two distinct
 variables in the same cache block
-* Technique: allocate data used by each processor contiguously,
+
+- Technique: allocate data used by each processor contiguously,
 or at least avoid interleaving in memory
-* Example problem: an array of ints, one written frequently by
+
+- Example problem: an array of ints, one written frequently by
 each processor (many ints per cache line)
 
-## Multicore Architecture
+## Non-Uniform Memory Architecture (NUMA)
+
+### Directory-based cache coherency
+
+Directory structure associated tto the node memory: one entery per block of memory.
+
+- Status bits
+- Sharers list
+
+### Simplified coherency protocol
+
+Possilbe commsnds arriving to home node form local node:
+
+- RdREq: Asks for copy of block with no intent to modify.
+
+- WrReq: Asks for copy of block with intent to modify or simply asks for permission to modify it.
+  
+- Dreply: Send clean copy of block.
+
+- Fetch: Asks remote node for copy of block,
+
+- Invalidate: Asks remote node to invalidate its copy.
+
+### Possible states
+
+**Node:**
+
+- Local
+
+- Home
+
+- Owner/Remoto
+
+**Opns:**
+
+- RdReq
+
+- WrReq
+
+- Drepla
+
+- Fetch
+
+- Invalidate
+
+**Stoles:**
+
+- U (Uncoded)
+
+- M (Modified)
+
+- S (Shared)
 

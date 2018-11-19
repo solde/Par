@@ -48,6 +48,7 @@
         display: block;
     }
 </style>
+
 # LAB 3
 
 ## Introduction
@@ -68,18 +69,18 @@ At last, we are going to modify the implementation of tree method in order to ge
 
 ```
 void merge(long n, T left[n], T right[n], T result[n*2], long start, long length) {
-		if (length < MIN_MERGE_SIZE*2L) {
-				// Base case
-				basicmerge(n, left, right, result, start, length);
-		} else {
-				// Recursive decomposition
-				tareador_start_task("merge 0");
-				merge(n, left, right, result, start, length/2);
-				tareador_end_task("merge 0");
-				tareador_start_task("merge 1");
-				merge(n, left, right, result, start + length/2, length/2);
-				tareador_end_task("merge 1");
-		}
+	if (length < MIN_MERGE_SIZE*2L) {
+		// Base case
+		basicmerge(n, left, right, result, start, length);
+	} else {
+		// Recursive decomposition
+		tareador_start_task("merge 0");
+		merge(n, left, right, result, start, length/2);
+		tareador_end_task("merge 0");
+		tareador_start_task("merge 1");
+		merge(n, left, right, result, start + length/2, length/2);
+		tareador_end_task("merge 1");
+	}
 }
 
 void multisort(long n, T data[n], T tmp[n]) {
