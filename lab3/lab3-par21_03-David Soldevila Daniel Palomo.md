@@ -434,8 +434,7 @@ In this optional we expanded the tree versions adding paralelitzation in the ini
 
 We got an overall better time than the basic tree version, even if it's not very noticable, it's worth the implementation if done correctly. For example, scheduling with static and n=1, pushes the initialize time up to 2s.
 
-[multisort-omp-optional2.c] (codes/multisort-omp-optional2.c)
-...
+```
 static void initialize(long length, T data[length]) {
    long i;
    #pragma omp parallel for private(i)
@@ -455,7 +454,10 @@ static void clear(long length, T data[length]) {
       data[i] = 0;
    }
 }
-...
+```
+[multisort-omp-optional2.c](codes/multisort-omp-optional2.c)
+
+<div class="page">
 
 ## Conclusions
 In this assigment, we explored different ways to paralelizise a recursive portion of a program. Tree or leaf.
