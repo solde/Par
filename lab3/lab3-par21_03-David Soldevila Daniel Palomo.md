@@ -431,7 +431,7 @@ With the a fist look at the plots we can see that executing the program with mor
 ## Optional 2 - Parallelization of initialize and clear
 In this optional we expanded the tree versions adding paralelitzation in the initialization of the tmp and data vectors. We choose to not implement any specific schedule to the for, because they didn't improve over the default version.
 
-<img class=half src="plots/opt_time.png"><img class=half src="plots/opt_su.png">
+<img class=half src="plots/opt_su.png"><img class=half src="plots/opt_time.png">
 
 We got an overall better time than the basic tree version, even if it's not very noticeable, it's worth the implementation if done correctly. For example, scheduling with static and n=1, pushes the initialize time up to 2s.
 
