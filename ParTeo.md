@@ -51,7 +51,7 @@
     }
 </style>
 
-# :shit: Understanding parallelism :shit:
+# Understanding parallelism
 
 ## SpeedUp vs Efficiency
 
@@ -435,3 +435,59 @@ Possilbe commsnds arriving to home node form local node:
 
 - S (Shared)
 
+### Support for sync at the architecture level
+
+Need hardware support to guarantee atomic instruction to fetch and update memory
+
+- Test-and-set (t&s) instrucction: read value in location and set to 1
+```
+lock    t&s r2, flag    // Read "flag" from memory and set it to 1
+        bnez r2, lock   // If it was 0, it following the execution, else repeat the loop
+        (code)
+unlock  st flag, #0     // Free look
+```
+
+- Atomic exchange: interchange of a value in a register with a value in memory
+
+```
+        daddui r2, r0, #1   // r0 always equals 0
+lock:   exch r2, flag       // Atomic exchange
+        bnez r2, lock       // If it was 0, it following the execution, else repeat the loop
+        (code)             
+unlock: st flag #0          // Free look
+```
+
+- Load-linked Store-Conditional (ll-sc)
+
+Atomic exchange
+```
+try:    mov r3, r4
+        ll r2, location
+        sc r3, location
+        beqz r3, try
+        mov r4, r2
+```
+
+fetch and increment
+```
+try:    ll r2, location
+        daddui r3, r2, #1
+        sc r3, location
+        beqz r3, try
+```
+* test-test-and-set 
+
+Technique reduces the necessary memory bandwidth and coherence protocol operations required by a pure test-and-set based synchronization
+
+```
+lock:   ld r2, flag // test with regular load
+                    // lock is cached meanwhile it is not updated
+        bnez r2, lock // test if the lock is free
+        t&s r2, flag // test and acquire lock if STILL free
+        bnez r2, lock
+        (code)
+unlock: st flag, #0 // free the lock
+```
+## The memory consistency problem
+
+Compiler and hardware can freely reorder operations to different memory locations, as long as data/control dependences in sequential execution are guaranteed.
