@@ -98,10 +98,22 @@ Even thought Tareador shows that block with id 1 (bottom left) at the second row
 <img src="tareador/16c.png">
 <note>Simulation of execution of nqeens using 16 core</note>
 
+
+
 With 32 cores the time is exactly the same as the 16 cores simulation. 
 
 <div class="page">
 
 ## Shared-memory parallelization
 
-At last we will parallelice the nqueen algoritm using OpenMP. 
+At last we will parallelice the nqueen algorithm using OpenMP.
+
+In order to reach a good level of parallelization for each task the program creates a copy of the chess board. That strategy eliminate the dependence of reading and writing the chess board.
+
+Last, we introduced a critical zone at the main case, only one thread should be the one who edit the number of solutions.
+
+With that changes we got the following elapset tiem and speed up polts.
+
+<img src="plots/plots.png">
+
+Note that the scalability is not stronger than we have seen at previous seasons. 

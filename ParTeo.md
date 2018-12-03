@@ -439,7 +439,7 @@ Possilbe commsnds arriving to home node form local node:
 
 Need hardware support to guarantee atomic instruction to fetch and update memory
 
-- Test-and-set (t&s) instrucction: read value in location and set to 1
+- Test-and-set (t&s): read value in location and set to 1
 ```
 lock    t&s r2, flag    // Read "flag" from memory and set it to 1
         bnez r2, lock   // If it was 0, it following the execution, else repeat the loop
@@ -491,3 +491,18 @@ unlock: st flag, #0 // free the lock
 ## The memory consistency problem
 
 Compiler and hardware can freely reorder operations to different memory locations, as long as data/control dependences in sequential execution are guaranteed.
+
+<div class="page">
+
+## Parallel programming principles: Data decomposition
+
+1. Identify the data used and/or produced in the computations. <br>In, out or inout. 
+2. Partition this data across various tasks.
+3. Obtain a computational partitioning that corresponds to the data partition. <br>Owner-computes rule.
+4. In distributed-memory architectures, add the necessary data allocation and movement actions.
+
+## Guidelines for data decomposition
+
+- Balanced data distribution.
+- Some times is better to have replicated data than consult it every time.
+- 
