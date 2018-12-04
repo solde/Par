@@ -146,9 +146,9 @@ With 32 cores the time is exactly the same as the 16 cores simulation.
 
 At last we will parallelice the nqueen algorithm using OpenMP.
 
-In order to reach a good level of parallelization for each task the program creates a copy of the chess board. That strategy eliminate the dependence of reading and writing the chess board.
+In order to reach a good level of parallelization for each task the program creates a copy of the chess board. That strategy eliminates the dependence of reading and writing the chess board.
 
-Last, we introduced a critical zone at the main case, only one thread should be the one who edit the number of solutions. And the resulting code is:
+Last, we introduced a critical zone at the basic case, only one thread should be the one who edits the number of solutions. And the resulting code is:
 ```
 void nqueens(int n, int j, char *a, int d) {
 	int i;
@@ -195,9 +195,9 @@ void nqueens(int n, int j, char *a, int d) {
 [nqueens-omp.c](codes/nqueens-omp.c)
 
 
-With that changes we got the following elapset tiem and speed up polts.
+With that changes we got the following elapsed time and speed up polts.
 
 <img src="plots/plots.png">
-<note>Speed U and elapsed time plots for n=13</note>
+<note>Speed Up and elapsed time plots for n=13</note>
 
-Note that the scalability is not stronger than we have seen at previous seasons. Now we are going to discuss the performance with paraver captures.
+Note that scalability is not as perfect as the previous sessions. Now we are going to discuss the performance with paraver captures (if it works).
