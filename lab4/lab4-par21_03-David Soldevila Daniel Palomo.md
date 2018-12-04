@@ -80,6 +80,46 @@ one solution:  0  2  4  7  9 11  5 10  1  6  8  3
 number of solutions: 14200
 ```
 
+The code of nqueens fuctions with tareadors calls:
+```
+void nqueens(int n, int j, char *a, int d) {
+     int i;
+
+     if (n == j) {
+#ifdef _TAREADOR_
+          tareador_start_task("Solution");
+#endif
+          /* put good solution in heap. */
+	if( sol == NULL ) {
+			sol = malloc(n * sizeof(char));
+			memcpy(sol, a, n * sizeof(char));
+	}
+	sol_count += 1;
+
+#ifdef _TAREADOR_
+          tareador_end_task("Solution");
+#endif
+     } else {
+          /* try each possible position for queen <j> */
+          for ( i=0 ; i < n ; i++ ) {
+                          
+#ifdef _TAREADOR_
+		  sprintf(stringMessage,"Trying [%d,%d]",j,i);
+		  tareador_start_task(stringMessage);
+#endif
+			b[j] = (char) i;
+			if (ok(j + 1, b)) {
+					nqueens(n, j + 1, b,d+1);
+			}
+#ifdef _TAREADOR_
+			tareador_end_task(stringMessage);
+#endif
+          }
+     }
+}
+```
+(nqueens-tar.c)[codes/nqueens-tar.c]
+
 Lets discuss about the parallelization of the algorithm using Tareador. First take a look at the dependence graph for the execution of the algorithm with n equals 4.
 
 <img src="tareador/graph.png">
@@ -98,8 +138,6 @@ Even thought Tareador shows that block with id 1 (bottom left) at the second row
 <img src="tareador/16c.png">
 <note>Simulation of execution of nqeens using 16 core</note>
 
-
-
 With 32 cores the time is exactly the same as the 16 cores simulation. 
 
 <div class="page">
@@ -110,11 +148,55 @@ At last we will parallelice the nqueen algorithm using OpenMP.
 
 In order to reach a good level of parallelization for each task the program creates a copy of the chess board. That strategy eliminate the dependence of reading and writing the chess board.
 
-Last, we introduced a critical zone at the main case, only one thread should be the one who edit the number of solutions.
+Last, we introduced a critical zone at the main case, only one thread should be the one who edit the number of solutions. And the resulting code is:
+```
+void nqueens(int n, int j, char *a, int d) {
+	int i;
+	if (n == j) {
+	#ifdef _TAREADOR_
+		tareador_start_task("Solution");
+	#endif
+		/* put good solution in heap. */
+	#pragma omp critical
+	{
+		if( sol == NULL ) {
+			sol = malloc(n * sizeof(char));
+			memcpy(sol, a, n * sizeof(char));
+		}
+		sol_count += 1;
+	}
+	#ifdef _TAREADOR_
+	tareador_end_task("Solution");
+	#endif
+	} else {
+		/* try each possible position for queen <j> */
+		for ( i=0 ; i < n ; i++ ) {
+			#ifdef _TAREADOR_
+				sprintf(stringMessage,"Trying [%d,%d]",j,i);
+				tareador_start_task(stringMessage);
+			#endif
+			char* b = alloca(sizeof(a));
+			memcpy(b, a, sizeof(a));
+			#pragma omp task final (d<CUTOFF) mergeable
+			{
+				b[j] = (char) i;
+				if (ok(j + 1, b)) {
+					nqueens(n, j + 1, b,d+1);
+				} 
+			}   
+			#ifdef _TAREADOR_
+				tareador_end_task(stringMessage);
+			#endif
+		}
+		#pragma omp taskwait 
+	}
+}
+```
+
 
 With that changes we got the following elapset tiem and speed up polts.
 
 <img src="plots/plots.png">
 <note>Speed U and elapsed time plots for n=13</note>
 
-Note that the scalability is not stronger than we have seen at previous seasons. Now we are going to discuss 
+Note that the scalability is not stronger than we have seen at previous seasons. Now we are going to discuss the performance with paraver captures.
