@@ -115,5 +115,6 @@ Last, we introduced a critical zone at the main case, only one thread should be 
 With that changes we got the following elapset tiem and speed up polts.
 
 <img src="plots/plots.png">
+<note>Speed U and elapsed time plots for n=13</note>
 
-Note that the scalability is not stronger than we have seen at previous seasons. 
+Note that the scalability is not stronger than we have seen at previous seasons. Now we are going to discuss 
