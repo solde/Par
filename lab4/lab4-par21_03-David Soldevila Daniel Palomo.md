@@ -118,7 +118,7 @@ void nqueens(int n, int j, char *a, int d) {
      }
 }
 ```
-(nqueens-tar.c)[codes/nqueens-tar.c]
+[nqueens-tar.c](codes/nqueens-tar.c)
 
 Lets discuss about the parallelization of the algorithm using Tareador. First take a look at the dependence graph for the execution of the algorithm with n equals 4.
 
@@ -192,6 +192,7 @@ void nqueens(int n, int j, char *a, int d) {
 	}
 }
 ```
+[nqueens-omp.c](codes/nqueens-omp.c)
 
 
 With that changes we got the following elapset tiem and speed up polts.
