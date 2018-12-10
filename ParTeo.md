@@ -505,4 +505,112 @@ Compiler and hardware can freely reorder operations to different memory location
 
 - Balanced data distribution.
 - Some times is better to have replicated data than consult it every time.
-- 
+
+
+## Problem 5
+
+Decomposition of InitDecomposition as:
+```
+typedef struct{
+    int i_start, i_end, j_start, j_end;
+} limits;
+
+limits deccomposition[num_threads];
+
+void InitDecomposition(limits * decomposition, in N int nt){ ... }
+
+void main(int argc, char *argv[]){
+    #pragma omp parallel
+    #pragma omp single
+        InitDecomposition(decomposition, N, omp_get_num_thread());
+    #pragma omp parallel{
+        ...
+        int i_start = ...
+        int i_end = ...
+        int j_start = ...
+        int j_end = ...
+        foo(i_start, i_end, j_start, j_end);
+    }
+}
+```
+
+Solution 1):
+```
+typedef struct{
+    int i_start, i_end, j_start, j_end;
+} limits;
+
+limits deccomposition[num_threads];
+
+void InitDecomposition(limits * decomposition, in N int nt){
+    int mod = N%nt, BS = N/nt;
+    for(int i = 0; i < nt; ++i){
+        decomposition[i].i_start = BS * i;
+        decomposition[i].i_end = decomposition[i].i_start + BS
+        decomposition[i].i_end = i_start + (BS/num_threads);
+        if (mod > 0) {
+                if (i < mod) {
+                    decomposition[i].i_start += i;
+                    decomposition[i].i_end += (i+1);
+                }
+                else {
+                    decomposition[i].i_start += mod;
+                    decomposition[i].i_end += mod;
+                }
+            }
+            foo(i_start, i_end, j_start, j_end);
+        }
+    }
+    decomposition[i].j_start = 0;
+    decomposition[i].j_end = N-1;
+}
+
+void main(int argc, char *argv[]){
+    #pragma omp parallel
+    #pragma omp single
+        InitDecomposition(decomposition, N, omp_get_num_thread());
+    #pragma omp parallel{
+        ...
+        int i_start = omp_get_num_thread() * (N/num_threads);
+        int i_end = i_start + (N/num_threads);
+        int j_start = 0
+        int j_end = N
+        
+}
+```
+
+Solution 2):
+```
+typedef struct{
+    int i_start, i_end, j_start, j_end;
+} limits;
+
+limits decomposition[num_threads];
+
+void InitDecomposition(limits * decomposition, in N int nt){
+    int id, K, BS;
+    id = omp_get_thread_num();
+    BS = N/K;
+
+    rowBlock = id / K;
+    decomposition[id].i_start = rowBlock * BS;
+    decomposition[id].i_end = decomposition[id].i_start + BS;
+
+    colBlock = id%K;
+    decomposition[id].j_start = colBlock * BS;
+    decomposition[id].j_end = decomposition[id].j_start + BS;
+}
+
+void main(int argc, char *argv[]){
+    #pragma omp parallel
+    #pragma omp single
+        InitDecomposition(decomposition, N, omp_get_num_thread());
+    #pragma omp parallel{
+        ...
+        int i_start = omp_get_num_thread() * (N/num_threads);
+        int i_end = i_start + (N/num_threads);
+        int j_start = 0
+        int j_end = N
+        
+}
+```

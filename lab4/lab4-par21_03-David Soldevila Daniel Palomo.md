@@ -149,6 +149,7 @@ At last we will parallelice the nqueen algorithm using OpenMP.
 In order to reach a good level of parallelization for each task the program creates a copy of the chess board. That strategy eliminates the dependence of reading and writing the chess board.
 
 Last, we introduced a critical zone at the basic case, only one thread should be the one who edits the number of solutions. And the resulting code is:
+
 ```
 void nqueens(int n, int j, char *a, int d) {
 	int i;
@@ -201,3 +202,9 @@ With that changes we got the following elapsed time and speed up polts.
 <note>Speed Up and elapsed time plots for n=13</note>
 
 Note that scalability is not as perfect as the previous sessions. Now we are going to discuss the performance with paraver captures (if it works).
+
+<img src="paraver/term.png"> 
+
+However, we can't execute paraver, tareador or any other program with GUI, in addition, we cannot create any paraver trace because theres no available disk space. But we only have the code of the previous laboratory and the necessary for this one.
+
+Therefore we can't fully complete this deliverable as asked
