@@ -155,7 +155,7 @@ With that parallelization strategy we got the following plots:
 
 <img src="plots/jacobi.png">
 
-Here we can see a clearly stop in performance gain at 4 cores,
+Here we can see a clearly stop in performance gain at 4 cores, we aren't sure why it stops so abruptly, maybe is because the nature of the code, or an undersight by our part.  We also see a small decrease in speed-up, ( and its consequentially rise in elapsed time) at eleven threads, probably due to overheads.
 
 <div class="page">
 
