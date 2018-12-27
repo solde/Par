@@ -60,13 +60,13 @@
 
 ## Introduction
 
-In the las session we are going to study the parallel performance of two heat diffusion algorithms, Jacobi and Gauss-Seidel. Then we are going to parallelize the code using OpenMP.
+In the last session of Par, we are going to study the potencial parallel performance of two heat diffusion algorithms, Jacobi and Gauss-Seidel. Then we are going to parallelize the code using OpenMP.
 
 <div class="page">
 
 ## Sequential heat diffusion program
 
-First of all, lets execute the sequential versions of heat, one using Jacobi algorithm and an otherone using Gauss-Seidel algorithm.
+First of all, lets execute the sequential version of heat twice, one using Jacobi algorithm and the other using Gauss-Seidel algorithm.
 
 Jacobi solver:
 
@@ -106,7 +106,7 @@ Result heat map:
 
 ## Analysis with Tareador
 
-Now we are going to study Tareador dependences graphs. We got two diferents gaphs, one with Jacovi solver algorithm and another with Gauss-Seidel algorithm.
+Now we are going to study Tareador dependences graphs. We got two diferents graphs, one with Jacovi solver algorithm and another with Gauss-Seidel algorithm.
 
 <img class="mini" src="tareador/dependency_graph_gauss.png"> <img class="mini" src="tareador/dependency_graph_jacovi.png">
 
@@ -120,7 +120,8 @@ As we can observe at the jacobi graph also exists a data dependence between inte
 
 ## Parallelization of Jacobi With OpenMP parallel
 
-In order to parallelize the jacobi solver function we used a parallel region with a reduction sum and diff as a private varialbe.
+In order to parallelize the jacobi solver function we used a parallel region with a reductiono n sum and declaring diff as a private variable.
+We tried to replace the reduction clause with atomic or critical on sum but we didn't manage to get a satisfactory performance, or any at all. This may be cause the optimitations within the reduction.
 
 The resulting code is:
 ```
@@ -154,7 +155,7 @@ With that parallelization strategy we got the following plots:
 
 <img src="plots/jacobi.png">
 
-As we can apreciate at the plots there is a inflation pint at 4 threads.
+Here we can see a clearly stop in performance gain at 4 cores,
 
 <div class="page">
 
