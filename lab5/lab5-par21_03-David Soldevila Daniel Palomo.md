@@ -106,7 +106,7 @@ Result heat map:
 
 ## Analysis with Tareador
 
-Now we are going to study tareador dependences graphs. We got two diferents gaphs, one with Jacovi solver algorithm and another with Gauss-Seidel algorithm.
+Now we are going to study Tareador dependences graphs. We got two diferents gaphs, one with Jacovi solver algorithm and another with Gauss-Seidel algorithm.
 
 <img class="mini" src="tareador/dependency_graph_gauss.png"> <img class="mini" src="tareador/dependency_graph_jacovi.png">
 
@@ -160,52 +160,54 @@ As we can apreciate at the plots there is a inflation pint at 4 threads.
 
 ## Parallelization of Gauss-Seidel with OpenMP ordered
 
-To parallelize the gauss algorithm we must use ordered clausure. It indicate a block of code that has to be executed sequentially, additionally you can specify a number of variables as a dependency of that execution.
+To parallelize the gauss algorithm we must use ordered clause. It indicate a block of code that has to be executed sequentially, additionally you can specify a number of variables as a dependency of that execution.
 
 Using that principle the resulting code is:
 
 ```
 double relax_gauss (double *u, unsigned sizex, unsigned sizey)
 {
-  double unew, diff, sum=0.0;
-  int chunkx = sizex/omp_get_num_threads();
-  int chunky = sizey/omp_get_num_threads();
-  int howmany=4;
-  #pragma omp parallel for reduction(+:sum) ordered(2)
-    for(int bx = 0; bx < sizex/chunkx; ++bx){
-      for(int by = 0; by < sizey/chunky; by++){
-        int i_start = bx*chunkx;
-        int i_end = chunkx*(1+bx);
-        int j_start = by*chunky;
-        int j_end = chunky*(1+by);
-        #pragma omp ordered depend(sink:bx,by-1) depend(sink:bx-1 by)
-        {
-          for (int i=max(1, i_start); i<= min(sizex-2, i_end); i++) {
-          for (int j=max(1, j_start); j<= min(sizey-2, j_end); j++) {
-            unew= 0.25 * ( u[ i*sizey + (j-1) ]+    // left
-                           u[ i*sizey + (j+1) ]+    // right
-                           u[ (i-1)*sizey + j ]+    // top
-                           u[ (i+1)*sizey j ]);     // bottom
-            diff = unew - u[i*sizey+ j];
-            sum += diff * diff; 
-            u[i*sizey+j]=unew;
-          }
-        }
-      }
+    double unew, diff, sum=0.0;
+    int howmany = 24;
+    int chunkx = sizex/howmany;
+    int chunky = sizey/howmany;
+    #pragma omp parallel for reduction(+:sum) ordered(2)
+    for(int bx = 0; bx < sizex/chunkx; bx++){
+        for(int by = 0; by < sizey/chunky; by++){
+            int i_start = lowerb(bx, howmany, sizex);
+            int i_end = upperb(bx, howmany, sizex);
+            int j_start = lowerb(by, howmany, sizey);
+            int j_end = upperb(by, howmany, sizey);
+            #pragma omp ordered depend(source)
+            {
+                for (int i=max(1, i_start); i<= min(sizex-2, i_end); i++) {
+                    for (int j=max(1, j_start); j<= min(sizey-2, j_end); j++) {
+                        unew= 0.25 * ( u[ i*sizey + (j-1) ]+    // left
+                                       u[ i*sizey + (j+1) ]+    // right
+                                       u[ (i-1)*sizey + j ]+    // top
+                                       u[ (i+1)*sizey + j ]);   // bottom
+                        diff = unew - u[i*sizey+j];
+                        sum += diff * diff;
+                        u[i*sizey+j]=unew;
+                    } 
+                }
+            }
+        }  
     }
-  }	
   return sum;
 }
 ```
 [solver-omp.c](codes/solver-omp.c)
 
-The result of the execution of that code 
+The resulting plots of the strong scalability of that code is:
 
-<img src="plots/gauss.png">
+<img src="plots/gauss.png" >
 
-## Optional: alternative parallel version for Gauss-Seidel using #pragma omp task and task dependences
+We can observe that it reach the limit of performance at 6 threads. In comparation with jacobi solver, that mothod is more paralellizable and perform better. At 12 cores Gauss solver is about 3 times faster than the other one. And also the paralellization limit is higher.
 
-<img src = "plots/">
+Now let's study the traces with Paraver.
+
+
 
 <div class="page">
 

@@ -1,5 +1,8 @@
 #include "heat.h"
 
+#include <stdio.h>
+#include <math.h>
+
 /*
  * Function to copy one matrix into another
  */
@@ -48,35 +51,35 @@ double relax_jacobi (double *u, double *utmp, unsigned sizex, unsigned sizey)
  */
 double relax_gauss (double *u, unsigned sizex, unsigned sizey)
 {
-    double unew, diff, sum=0.0;
-    
-    int chunkx = sizex/omp_get_num_threads();
-    int chunky = sizey/omp_get_num_threads();
 
-    int howmany=4;
+	  double unew, diff, sum=0.0;
+	  int howmany = 24;
+	  int chunkx = sizex/howmany;
+	  int chunky = sizey/howmany;
+	  //printf("%d %d\n", chunkx, chunky);
 	  #pragma omp parallel for reduction(+:sum) ordered(2)
-	  for(int bx = 0; bx < sizex/chunkx; ++bx){
-		  for(int by = 0; by < sizey/chunky; by++){
-			  int i_start = bx*chunkx;
-			  int i_end = chunkx*(1+bx);
-			  int j_start = by*chunky;
-			  int j_end = chunky*(1+by);
-			  #pragma omp ordered depend(sink:bx,by-1) depend(sink:bx-1, by)
-			  {
-				  for (int i=max(1, i_start); i<= min(sizex-2, i_end); i++) {
-						for (int j=max(1, j_start); j<= min(sizey-2, j_end); j++) {
-							unew= 0.25 * ( u[ i*sizey	+ (j-1) ]+  // left
-									   u[ i*sizey	+ (j+1) ]+  // right
-									   u[ (i-1)*sizey	+ j ]+  // top
-									   u[ (i+1)*sizey	+ j ]); // bottom
-							diff = unew - u[i*sizey+ j];
-							sum += diff * diff; 
-							u[i*sizey+j]=unew;
-						}
-				  }
-			  }
-		  }
-	  }	
-			
-    return sum;
+		for(int bx = 0; bx < sizex/chunkx; bx++){
+	      for(int by = 0; by < sizey/chunky; by++){
+		    int i_start = lowerb(bx, howmany, sizex);
+		    int i_end = upperb(bx, howmany, sizex);
+  		    int j_start = lowerb(by, howmany, sizey);
+		    int j_end = upperb(by, howmany, sizey);
+		    #pragma omp ordered depend(source)
+		    {
+				for (int i=max(1, i_start); i<= min(sizex-2, i_end); i++) {
+				  for (int j=max(1, j_start); j<= min(sizey-2, j_end); j++) {
+					  
+						unew= 0.25 * ( u[ i*sizey + (j-1) ]+    // left
+									   u[ i*sizey + (j+1) ]+    // right
+									   u[ (i-1)*sizey + j ]+    // top
+									   u[ (i+1)*sizey + j ]);   // bottom
+						diff = unew - u[i*sizey+j];
+						sum += diff * diff;
+						u[i*sizey+j]=unew;
+				  } 
+				}
+			}
+		 }  
+	  }
+  return sum;
 }
